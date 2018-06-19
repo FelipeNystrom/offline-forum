@@ -5,25 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Forum
-        <em>(offline)</em>
-    </title>
+    <title>Forum (offline)</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <header>
+        <nav>
+            <h1 id="forum-name">Offline Forum</h1>
+            <button id="showInputSection">Write Post</button>
+        </nav>
+    </header>
     <main>
         <section id="inputSection">
             <div id="formDiv">
                 <form id="form">
                     <input type="text" id="formTitle" placeholder="title">
                     <textarea id="formText" cols="30" rows="10" placeholder="post text"></textarea>
-                    <input type="text" id="formAuthor">
-                    <input type="text" id="formAuthorImg">
+                    <div id="formAuthorInfo">
+                        <input type="text" id="formAuthor" placeholder="name of author">
+                        <input type="text" id="formAuthorImg" placeholder="author image">
+                    </div>
+                    <input type="submit" value="make new post">
+
                 </form>
             </div>
-            <button id="showInputSection"></button>
         </section>
 
         <section id="posts">
