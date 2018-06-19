@@ -23,13 +23,13 @@ button {
 }
 
 header {
-  min-height: 5rem;
+  height: 8rem;
   background-color: beige;
 }
 
 nav {
   width: 80%;
-  margin: 1rem auto;
+  margin: 2.5rem auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -79,7 +79,7 @@ footer {
 }
 
 .post-title {
-  height: 30%;
+  height: 20%;
 
   background-color: azure;
 }
@@ -87,6 +87,13 @@ footer {
 .post-text {
   height: 70%;
   background-color: brown;
+}
+
+.post-admin {
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 #deckOfPosts,
