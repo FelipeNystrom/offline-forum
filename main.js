@@ -54,13 +54,13 @@ const generatePost = post => {
   }
 };
 
-const removePost = post => {
-  let postId = parseInt(post.id);
-  deckOfPosts.removeChild(post);
-  let post = posts.filter(postID => postID.id !== postId);
+const removePost = postToRemove => {
+  console.log(postToRemove);
+  let removePostId = parseInt(postToRemove.id);
+  deckOfPosts.removeChild(postToRemove);
+  posts = posts.filter(postID => postID === removePostId);
   console.log(posts);
 };
-
 // Event Listners
 showSection.addEventListener('click', e => {
   e.preventDefault();
@@ -83,7 +83,7 @@ deckOfPosts.addEventListener('click', e => {
   if (e.target.className === 'update fas fa-edit') {
     let post = e.target.parentNode.parentNode.parentNode.parentNode;
     console.log(post);
-  } else if (e.target.className === 'delete far fa-trash-alt' && e.target.id) {
+  } else if (e.target.className === 'delete far fa-trash-alt') {
     let post = e.target.parentNode.parentNode.parentNode.parentNode;
     removePost(post);
   }
