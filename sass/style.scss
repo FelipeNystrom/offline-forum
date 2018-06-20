@@ -1,9 +1,4 @@
-/* Mixins */
-
-@mixin flex($direction: column) {
-  display: flex;
-  flex-direction: $direction;
-}
+@import 'mixins';
 
 /* Document settings */
 

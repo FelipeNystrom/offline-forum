@@ -1,8 +1,6 @@
+@import 'mixins';
+
 /* posts */
-@mixin flex($direction: column) {
-  display: flex;
-  flex-direction: $direction;
-}
 
 .post {
   margin: 1rem 0;

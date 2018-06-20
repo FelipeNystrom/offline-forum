@@ -1,7 +1,4 @@
-@mixin flex($direction: column) {
-  display: flex;
-  flex-direction: $direction;
-}
+@import 'mixins';
 
 header {
   height: 8rem;
