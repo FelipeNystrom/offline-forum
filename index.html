@@ -37,31 +37,21 @@
         <section id="posts">
             <div id="deckOfPosts">
 
-                <div class="post">
+                <div id="postId${post.id}" class="post">
                     <div class="post-img">
-                        <img src="#" alt="image of author">
+                        <img src="${post.img}" alt="image of author">
                     </div>
                     <div class="post-body">
-                        <div class="post-title"></div>
-                        <div class="post-text"></div>
-                    </div>
-                </div>
-
-                <div class="post">
-                    <div class="post-img">
-                        <img src="#" alt="image of author">
-                    </div>
-                    <div class="post-body">
-                        <div class="post-title"></div>
-                        <div class="post-text"></div>
                         <div class="post-admin">
-                            <p class="update">
-                                <i class="fas fa-edit"></i>
+                            <p>
+                                <i class="update fas fa-edit"></i>
                             </p>
-                            <p class="delete">
-                                <i class="far fa-trash-alt"></i>
+                            <p>
+                                <i class="delete far fa-trash-alt"></i>
                             </p>
                         </div>
+                        <div class="post-title">${post.title}</div>
+                        <div class="post-text">${post.text}</div>
                     </div>
                 </div>
 

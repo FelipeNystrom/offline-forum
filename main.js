@@ -25,27 +25,30 @@ const pushPost = (titleInput, textInput, authorInput, imgInput, arr) => {
 
 const generatePost = () => {
   for (post of posts) {
-    let newPost = `<div class="post">
+    let newPost = `<div id="postId${post.id}" class="post">
                     <div class="post-img">
                         <img src="${post.img}" alt="image of author">
                     </div>
                     <div class="post-body">
+                    <div class="post-admin">
+                            <p>
+                                <i class="fas fa-edit update"></i>
+                            </p>
+                            <p>
+                                    <i class="far fa-trash-alt delete "></i>
+                            </p>
+                        </div>
                         <div class="post-title">${post.title}</div>
                         <div class="post-text">${post.text}</div>
                     </div>
-                    <div class="post-admin">
-                            <p class="update">
-                                <i class="fas fa-edit"></i>
-                            </p>
-                            <p class="delete">
-                                    <i class="far fa-trash-alt"></i>
-                            </p>
-                        </div>
-
                 </div>`;
 
     deckOfPosts.insertAdjacentHTML('beforeend', newPost);
   }
+};
+
+const removePost = postId => {
+  deckOfPosts.removeChild(postId);
 };
 
 // Event Listners
@@ -61,4 +64,15 @@ form.addEventListener('submit', e => {
   let formAuthorImg = document.querySelector('#formAuthorImg').value;
   pushPost(formTitle, formText, formAuthor, formAuthorImg, posts);
   inputSection.style.display = 'none';
+});
+
+deckOfPosts.addEventListener('click', e => {
+  if (e.target.className === 'update fas fa-edit') {
+    let post = e.target.parentNode.parentNode.parentNode.parentNode;
+    console.log(post);
+  } else if (e.target.className === 'delete far fa-trash-alt') {
+    let post = e.target.parentNode.parentNode.parentNode.parentNode;
+    console.log(post);
+    removePost(post);
+  }
 });
