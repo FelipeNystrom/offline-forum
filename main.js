@@ -102,8 +102,6 @@ const updatePost = postObj => {
   inputSection.style.display = 'block';
 };
 
-const updateArrayAndDocument = (postObj, postId) => {};
-
 // ======== REMOVE POST FUNCTION ========
 
 // delete post through id
@@ -157,19 +155,27 @@ form.addEventListener('submit', e => {
     console.log(e.target[4].className);
     pushPost(formTitle, formText, formAuthor, formAuthorImg, posts);
   } else if (e.target[5].className === 'update-post') {
+    // take post id and fetch object from array
     let postId = document.querySelector('#postId').value;
     let oldPost = getPost(postId);
 
+    // assign new values to postobject
     oldPost.title = formTitle;
     oldPost.text = formText;
     oldPost.author = formAuthor;
     oldPost.img = formAuthorImg;
 
+    // reset post counter
     _postId = 0;
 
+    // remove posts from DOM
     deckOfPosts.innerHTML = '';
 
+    // re-generate posts in array to DOM
     generatePost();
+
+    // re-enable new post button
+    showInputSection.disabled = false;
   }
   // hides form section
   inputSection.style.display = 'none';
@@ -177,7 +183,7 @@ form.addEventListener('submit', e => {
   // empty form section
   form.innerHTML = '';
 
-  // disable sho input button
+  // disable show input button
   showInputSection.disabled = false;
 });
 
@@ -186,8 +192,14 @@ form.addEventListener('submit', e => {
 deckOfPosts.addEventListener('click', e => {
   // update post choice
   if (e.target.className === 'update fas fa-edit') {
+    // disable new post button
+    showInputSection.disabled = true;
+
+    // selects whole post element
     let post = e.target.parentNode.parentNode.parentNode.parentNode;
+    // get post object from array
     let fetchedPost = getPost(post.id);
+    // generate update form and populate with post values from array
     updatePost(fetchedPost);
 
     // remove post choice
