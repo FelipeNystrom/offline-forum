@@ -16,7 +16,7 @@
 
 #deckOfPosts,
 #formDiv {
-  @include flex-column;
+  @include flex;
   align-items: center;
 }
 

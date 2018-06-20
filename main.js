@@ -77,7 +77,7 @@ deckOfPosts.addEventListener('click', e => {
   if (e.target.className === 'update fas fa-edit') {
     let post = e.target.parentNode.parentNode.parentNode.parentNode;
     console.log(post);
-  } else if (e.target.className === 'delete far fa-trash-alt') {
+  } else if (e.target.className === 'delete far fa-trash-alt' && e.target.id) {
     let post = e.target.parentNode.parentNode.parentNode.parentNode;
     removePost(post);
   }

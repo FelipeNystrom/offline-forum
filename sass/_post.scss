@@ -41,14 +41,14 @@
 }
 
 .post-admin {
-  @include flex-row;
+  @include flex(row);
   height: 10%;
   justify-content: space-around;
   align-items: center;
 }
 
 .post-crud {
-  @include flex-row;
+  @include flex(row);
   width: 20%;
   justify-content: space-between;
 }
