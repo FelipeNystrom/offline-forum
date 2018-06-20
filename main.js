@@ -4,16 +4,7 @@ const form = document.querySelector('#form');
 const deckOfPosts = document.querySelector('#deckOfPosts');
 
 // Data variables
-let posts = [
-  {
-    title: 'This is a post',
-    text: 'some text',
-    author: 'john doe',
-    img:
-      'https://lastingimpression.info/wp-content/uploads/2018/02/unknown.jpg',
-    id: 0
-  }
-];
+let posts = [];
 
 let _postId = 0;
 
@@ -216,5 +207,3 @@ deckOfPosts.addEventListener('click', e => {
     removePost(post);
   }
 });
-
-generatePost();
