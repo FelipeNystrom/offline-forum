@@ -6,9 +6,13 @@ const deckOfPosts = document.querySelector('#deckOfPosts');
 // Data variables
 let posts = [];
 
-let postId = 0;
+let _postId = 0;
 
-// Functions
+// FUNCTIONS
+
+// ======== CREATE POST FUNCTIONS ========
+
+// makes a object from new post input form and pushes that object to array posts
 const pushPost = (titleInput, textInput, authorInput, imgInput, arr) => {
   let post = {
     title: titleInput,
@@ -30,37 +34,38 @@ const pushPost = (titleInput, textInput, authorInput, imgInput, arr) => {
 
 // generate post
 
-const generatePost = post => {
+const generatePost = (post = null) => {
   // html structure for new post
-  let newPost = `<div id="${post.id}" class="post">
-  <div class="post-img">
-      <img src="${post.img}" alt="image of author">
-  </div>
-  <div class="post-body">
-  <div class="post-admin">
-          <p>
-              <i class="update fas fa-edit"></i>
-          </p>
-          <p>
-                  <i class="delete far fa-trash-alt"></i>
-          </p>
-      </div>
-      <div class="post-title">${post.title}</div>
-      <div class="post-text">${post.text}</div>
-  </div>
-</div>`;
-
   for (post of posts) {
+    let newPost = `<div id="${post.id}" class="post">
+                    <div class="post-img">
+                        <img src="${post.img}" alt="image of author">
+                    </div>
+                    <div class="post-body">
+                    <div class="post-admin">
+                            <p>
+                                <i class="update fas fa-edit"></i>
+                            </p>
+                            <p>
+                                    <i class="delete far fa-trash-alt"></i>
+                            </p>
+                        </div>
+                        <div class="post-title">${post.title}</div>
+                        <div class="post-text">${post.text}</div>
+                    </div>
+                  </div>`;
     // prevent loop to inject same post more than once
-    if (post.id === postId) {
+    if (post.id === _postId) {
       deckOfPosts.insertAdjacentHTML('beforeend', newPost);
-      postId++;
-    } else if (postId === post.id) {
+      _postId++;
+    } else if (_postId === post.id) {
       deckOfPosts.insertAdjacentHTML('beforeend', newPost);
-      postId++;
+      _postId++;
     }
   }
 };
+
+// ======== UPDATE POST FUNCTIONS ========
 
 // fetch post object with id
 
@@ -80,9 +85,9 @@ const getPost = postId => {
 
 const updatePost = postObj => {
   // form html + post value
-  const updatePostForm = `<input type="text" id="formTitle" value="${
-    postObj.title
-  }">
+  const updatePostForm = `
+  <input type="hidden" id="postId" value="${postObj.id}">
+  <input type="text" id="formTitle" value="${postObj.title}">
   <textarea id="formText" cols="30" rows="10">${postObj.text}</textarea>
   <div id="formAuthorInfo">
       <input type="text" id="formAuthor" value="${postObj.authour}">
@@ -97,6 +102,10 @@ const updatePost = postObj => {
   inputSection.style.display = 'block';
 };
 
+const updateArrayAndDocument = (postObj, postId) => {};
+
+// ======== REMOVE POST FUNCTION ========
+
 // delete post through id
 
 const removePost = postToRemove => {
@@ -107,13 +116,14 @@ const removePost = postToRemove => {
   console.log(posts);
 };
 
-// Event Listners
+// ======== EVENT LISTENERS ========
 
 // generates create post form and shows input section
 
 showInputSection.addEventListener('click', e => {
   // html code to be injected on event
-  const createPostForm = `<input type="text" id="formTitle" placeholder="title">
+  const createPostForm = `
+  <input type="text" id="formTitle" placeholder="title">
   <textarea id="formText" cols="30" rows="10" placeholder="post text"></textarea>
   <div id="formAuthorInfo">
       <input type="text" id="formAuthor" placeholder="name of author">
@@ -141,14 +151,25 @@ form.addEventListener('submit', e => {
   let formText = document.querySelector('#formText').value;
   let formAuthor = document.querySelector('#formAuthor').value;
   let formAuthorImg = document.querySelector('#formAuthorImg').value;
-
-  // Check which form is presented
+  // check which form is presented
   if (e.target[4].className === 'new-post') {
     // create object to push to arrary
     console.log(e.target[4].className);
     pushPost(formTitle, formText, formAuthor, formAuthorImg, posts);
-  } else if (e.target[4].className === 'update-post') {
-    console.log('Det här ska uppdateras');
+  } else if (e.target[5].className === 'update-post') {
+    let postId = document.querySelector('#postId').value;
+    let oldPost = getPost(postId);
+
+    oldPost.title = formTitle;
+    oldPost.text = formText;
+    oldPost.author = formAuthor;
+    oldPost.img = formAuthorImg;
+
+    _postId = 0;
+
+    deckOfPosts.innerHTML = '';
+
+    generatePost();
   }
   // hides form section
   inputSection.style.display = 'none';
