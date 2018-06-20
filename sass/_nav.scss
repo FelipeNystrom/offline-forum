@@ -1,4 +1,7 @@
-@import 'mixins';
+@mixin flex($direction: column) {
+  display: flex;
+  flex-direction: $direction;
+}
 
 header {
   height: 8rem;
@@ -6,7 +9,7 @@ header {
 }
 
 nav {
-  @include flex-row;
+  @include flex(row);
   width: 80%;
   margin: 2.5rem auto;
   justify-content: space-between;
