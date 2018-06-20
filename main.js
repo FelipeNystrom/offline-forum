@@ -6,6 +6,8 @@ const deckOfPosts = document.querySelector('#deckOfPosts');
 // Data variables
 let posts = [];
 
+let postId = 0;
+
 // Functions
 const pushPost = (titleInput, textInput, authorInput, imgInput, arr) => {
   let post = {
@@ -24,7 +26,6 @@ const pushPost = (titleInput, textInput, authorInput, imgInput, arr) => {
 };
 
 const generatePost = post => {
-  let postId = post.id;
   for (post of posts) {
     let newPost = `<div id="${post.id}" class="post">
                     <div class="post-img">
@@ -43,8 +44,12 @@ const generatePost = post => {
                         <div class="post-text">${post.text}</div>
                     </div>
                 </div>`;
-    if (postId === post.id) {
+    if (post.id === postId) {
       deckOfPosts.insertAdjacentHTML('beforeend', newPost);
+      postId++;
+    } else if (postId === post.id) {
+      deckOfPosts.insertAdjacentHTML('beforeend', newPost);
+      postId++;
     }
   }
 };
@@ -73,6 +78,7 @@ form.addEventListener('submit', e => {
 });
 
 deckOfPosts.addEventListener('click', e => {
+  console.log(e.target);
   e.preventDefault();
   if (e.target.className === 'update fas fa-edit') {
     let post = e.target.parentNode.parentNode.parentNode.parentNode;

@@ -33,6 +33,7 @@
 }
 
 #form {
+  @include flex;
   background-color: grey;
   padding: 1rem;
   input,
