@@ -1,0 +1,65 @@
+/* Document settings */
+
+@import 'resetAndDocuConfig';
+
+/* Nav */
+
+@import 'nav';
+
+/* Posts */
+
+@import 'post';
+
+#deckOfPosts,
+#formDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#inputSection {
+  display: none;
+}
+
+#formDiv {
+  margin: 1rem auto 0 auto;
+  width: 90%;
+}
+
+#form {
+  background-color: grey;
+  padding: 1rem;
+  input,
+  textarea {
+    border: 0;
+    padding: 0.4rem;
+    margin: 1rem 0;
+    width: 100%;
+    border-radius: 0.2rem;
+    background-color: rgb(255, 255, 255);
+    color: grey;
+  }
+}
+
+#form,
+#formAuthorInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+#formAuthorInfo {
+  input {
+    padding: 0.4rem;
+    width: 40%;
+    border-radius: 0.2rem;
+  }
+}
+
+#forum-name {
+  text-transform: uppercase;
+  font-size: 1.3rem;
+  padding-top: 0.3rem;
+}
+
+#showInputSection {
+}

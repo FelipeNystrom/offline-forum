@@ -1,0 +1,57 @@
+/* posts */
+
+.post {
+  margin: 1rem 0;
+  width: 90%;
+  min-height: 15rem;
+  background-color: rgb(38, 90, 90);
+  display: flex;
+  padding: 2rem 0;
+}
+
+.post-img {
+  flex: 1;
+  max-width: 30%;
+  background-color: aqua;
+}
+
+.post-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+  align-items: center;
+}
+
+.post-title,
+.post-text,
+.post-admin {
+  width: 90%;
+  padding: 1rem;
+}
+
+.post-title {
+  height: 20%;
+
+  background-color: azure;
+}
+
+.post-text {
+  height: 70%;
+  background-color: brown;
+}
+
+.post-admin {
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.post-crud {
+  display: flex;
+  flex-direction: row;
+  width: 20%;
+  justify-content: space-between;
+}

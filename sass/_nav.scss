@@ -1,0 +1,14 @@
+header {
+  height: 8rem;
+  background-color: beige;
+}
+
+nav {
+  width: 80%;
+  margin: 2.5rem auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
