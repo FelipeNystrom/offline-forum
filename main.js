@@ -88,7 +88,7 @@ const updatePost = postObj => {
       <input type="text" id="formAuthor" value="${postObj.authour}">
       <input type="text" id="formAuthorImg" value="${postObj.img}">
   </div>
-  <input type="submit" value="update post">`;
+  <input class="update-post" type="submit" value="update post">`;
 
   // insert post value + update form
   form.insertAdjacentHTML('afterbegin', updatePostForm);
@@ -119,7 +119,7 @@ showInputSection.addEventListener('click', e => {
       <input type="text" id="formAuthor" placeholder="name of author">
       <input type="text" id="formAuthorImg" placeholder="author image">
   </div>
-  <input type="submit" value="make new post">`;
+  <input class="new-post" type="submit" value="make new post">`;
 
   // disable nav button
   showInputSection.disabled = true;
@@ -142,9 +142,14 @@ form.addEventListener('submit', e => {
   let formAuthor = document.querySelector('#formAuthor').value;
   let formAuthorImg = document.querySelector('#formAuthorImg').value;
 
-  // create object to push to arrary
-  pushPost(formTitle, formText, formAuthor, formAuthorImg, posts);
-
+  // Check which form is presented
+  if (e.target[4].className === 'new-post') {
+    // create object to push to arrary
+    console.log(e.target[4].className);
+    pushPost(formTitle, formText, formAuthor, formAuthorImg, posts);
+  } else if (e.target[4].className === 'update-post') {
+    console.log('Det här ska uppdateras');
+  }
   // hides form section
   inputSection.style.display = 'none';
 
@@ -158,11 +163,7 @@ form.addEventListener('submit', e => {
 // delegated listener on posts.
 
 deckOfPosts.addEventListener('click', e => {
-  console.log(e.target);
-  e.preventDefault();
-
   // update post choice
-
   if (e.target.className === 'update fas fa-edit') {
     let post = e.target.parentNode.parentNode.parentNode.parentNode;
     let fetchedPost = getPost(post.id);
