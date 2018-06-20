@@ -1,3 +1,7 @@
+/* Mixins */
+
+@import 'mixins';
+
 /* Document settings */
 
 @import 'resetAndDocuConfig';
@@ -12,8 +16,7 @@
 
 #deckOfPosts,
 #formDiv {
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
   align-items: center;
 }
 
@@ -61,5 +64,5 @@
   padding-top: 0.3rem;
 }
 
-#showInputSection {
-}
+// #showInputSection {
+// }

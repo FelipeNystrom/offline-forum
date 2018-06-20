@@ -20,39 +20,45 @@ const pushPost = (titleInput, textInput, authorInput, imgInput, arr) => {
     post.id = arr.length;
   }
   posts.push(post);
-  generatePost();
+  generatePost(post);
 };
 
-const generatePost = () => {
+const generatePost = post => {
+  let postId = post.id;
   for (post of posts) {
-    let newPost = `<div id="postId${post.id}" class="post">
+    let newPost = `<div id="${post.id}" class="post">
                     <div class="post-img">
                         <img src="${post.img}" alt="image of author">
                     </div>
                     <div class="post-body">
                     <div class="post-admin">
                             <p>
-                                <i class="fas fa-edit update"></i>
+                                <i class="update fas fa-edit"></i>
                             </p>
                             <p>
-                                    <i class="far fa-trash-alt delete "></i>
+                                    <i class="delete far fa-trash-alt"></i>
                             </p>
                         </div>
                         <div class="post-title">${post.title}</div>
                         <div class="post-text">${post.text}</div>
                     </div>
                 </div>`;
-
-    deckOfPosts.insertAdjacentHTML('beforeend', newPost);
+    if (postId === post.id) {
+      deckOfPosts.insertAdjacentHTML('beforeend', newPost);
+    }
   }
 };
 
-const removePost = postId => {
-  deckOfPosts.removeChild(postId);
+const removePost = post => {
+  let postId = parseInt(post.id);
+  deckOfPosts.removeChild(post);
+  let post = posts.filter(postID => postID.id !== postId);
+  console.log(posts);
 };
 
 // Event Listners
 showSection.addEventListener('click', e => {
+  e.preventDefault();
   inputSection.style.display = 'block';
 });
 
@@ -67,12 +73,12 @@ form.addEventListener('submit', e => {
 });
 
 deckOfPosts.addEventListener('click', e => {
+  e.preventDefault();
   if (e.target.className === 'update fas fa-edit') {
     let post = e.target.parentNode.parentNode.parentNode.parentNode;
     console.log(post);
   } else if (e.target.className === 'delete far fa-trash-alt') {
     let post = e.target.parentNode.parentNode.parentNode.parentNode;
-    console.log(post);
     removePost(post);
   }
 });
