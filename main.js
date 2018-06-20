@@ -54,6 +54,16 @@ const generatePost = post => {
   }
 };
 
+const updatePost = postId => {
+  let idNumber = parseInt(postId);
+  for (post of posts) {
+    console.log(post.id);
+    if (post.id === idNumber) {
+      console.log(post.title);
+    }
+  }
+};
+
 const removePost = postToRemove => {
   console.log(postToRemove);
   let removePostId = parseInt(postToRemove.id);
@@ -82,7 +92,8 @@ deckOfPosts.addEventListener('click', e => {
   e.preventDefault();
   if (e.target.className === 'update fas fa-edit') {
     let post = e.target.parentNode.parentNode.parentNode.parentNode;
-    console.log(post);
+    let postId = post.id;
+    updatePost(postId);
   } else if (e.target.className === 'delete far fa-trash-alt') {
     let post = e.target.parentNode.parentNode.parentNode.parentNode;
     removePost(post);
