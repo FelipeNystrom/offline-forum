@@ -4,7 +4,16 @@ const form = document.querySelector('#form');
 const deckOfPosts = document.querySelector('#deckOfPosts');
 
 // Data variables
-let posts = [];
+let posts = [
+  {
+    title: 'This is a post',
+    text: 'some text',
+    author: 'john doe',
+    img:
+      'https://lastingimpression.info/wp-content/uploads/2018/02/unknown.jpg',
+    id: 0
+  }
+];
 
 let _postId = 0;
 
@@ -38,11 +47,12 @@ const generatePost = (post = null) => {
   // html structure for new post
   for (post of posts) {
     let newPost = `<div id="${post.id}" class="post">
-                    <div class="post-img">
-                        <img src="${post.img}" alt="image of author">
-                    </div>
+                    
                     <div class="post-body">
-                    <div class="post-admin">
+                    
+                        <div class="post-title"><h3>${post.title}</h3></div>
+                        <div class="post-text">${post.text}</div>
+                        <div class="post-admin">
                             <p>
                                 <i class="update fas fa-edit"></i>
                             </p>
@@ -50,8 +60,6 @@ const generatePost = (post = null) => {
                                     <i class="delete far fa-trash-alt"></i>
                             </p>
                         </div>
-                        <div class="post-title">${post.title}</div>
-                        <div class="post-text">${post.text}</div>
                     </div>
                   </div>`;
     // prevent loop to inject same post more than once
@@ -208,3 +216,5 @@ deckOfPosts.addEventListener('click', e => {
     removePost(post);
   }
 });
+
+generatePost();

@@ -1,4 +1,9 @@
-@import 'mixins';
+@mixin flex($direction: column) {
+  display: flex;
+  flex-direction: $direction;
+}
+
+@import '_colorVariables';
 
 /* posts */
 
@@ -6,47 +11,64 @@
   margin: 1rem 0;
   width: 90%;
   min-height: 15rem;
-  background-color: rgb(38, 90, 90);
+  background-color: $post-background;
+  border-radius: 1rem;
   display: flex;
-  padding: 2rem 0;
+  box-shadow: $primary-shadow;
 }
 
 .post-img {
+  border-radius: 50%;
+  overflow: hidden;
   flex: 1;
-  max-width: 30%;
+  height: 100%;
+  max-width: 10rem;
+  // max-width: 30%;
   background-color: aqua;
+  img {
+    width: 100%;
+  }
 }
 
 .post-body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-left: 1rem;
   align-items: center;
+  margin-top: 1rem;
 }
 
-.post-title,
-.post-text,
-.post-admin {
+%post-inner-body {
   width: 90%;
   padding: 1rem;
 }
 
 .post-title {
+  @extend %post-inner-body;
   height: 20%;
-  background-color: azure;
+  border-bottom: 0.1rem solid hsla(0, 0%, 80%, 0.6);
+  text-transform: uppercase;
 }
 
 .post-text {
+  @extend %post-inner-body;
   height: 70%;
-  background-color: brown;
 }
 
 .post-admin {
+  @extend %post-inner-body;
   @include flex(row);
   height: 10%;
   justify-content: space-around;
   align-items: center;
+  .delete {
+    color: $danger;
+    font-size: 1.5rem;
+  }
+  .update {
+    color: $change;
+    font-size: 1.5rem;
+  }
 }
 
 .post-crud {

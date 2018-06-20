@@ -1,8 +1,13 @@
-@import 'mixins';
+@mixin flex($direction: column) {
+  display: flex;
+  flex-direction: $direction;
+}
+
+@import '_colorVariables';
 
 header {
   height: 8rem;
-  background-color: beige;
+  background-color: $secondary-background;
 }
 
 nav {
