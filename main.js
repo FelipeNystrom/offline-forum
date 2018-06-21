@@ -4,7 +4,33 @@ const form = document.querySelector('#form');
 const deckOfPosts = document.querySelector('#deckOfPosts');
 
 // Data variables
-let posts = [];
+let posts = [
+  // populated with dummy data
+  {
+    title: 'This is a post',
+    text:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing…cies ligula, et imperdiet urna erat vitae sapien.',
+    author: 'John Doe',
+    img: '',
+    id: 0
+  },
+  {
+    title: 'This is a post',
+    text:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing…cies ligula, et imperdiet urna erat vitae sapien. Lorem ipsum dolor sit amet, consectetur adipiscing…cies ligula, et imperdiet urna erat vitae sapien.Lorem ipsum dolor sit amet, consectetur adipiscing…cies ligula, et imperdiet urna erat vitae sapien.Lorem ipsum dolor sit amet, consectetur adipiscing…cies ligula, et imperdiet urna erat vitae sapien.',
+    author: 'John Doe',
+    img: '',
+    id: 1
+  },
+  {
+    title: 'This is a post',
+    text:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing…cies ligula, et imperdiet urna erat vitae sapien.',
+    author: 'John Doe',
+    img: '',
+    id: 2
+  }
+];
 
 let _postId = 0;
 
@@ -211,9 +237,14 @@ deckOfPosts.addEventListener('click', e => {
       // selects whole post element
       post =
         e.target.parentNode.parentNode.parentNode.parentNode.parentNode
-          .parentNode;
+          .parentNode.id;
+
+      console.log(
+        e.target.parentNode.parentNode.parentNode.parentNode.parentNode
+          .parentNode.id
+      );
       // get post object from array
-      fetchedPost = getPost(post.id);
+      fetchedPost = getPost(post);
       // generate update form and populate with post values from array
       updatePost(fetchedPost);
 
@@ -222,6 +253,7 @@ deckOfPosts.addEventListener('click', e => {
     // remove post choice
     case 'delete far fa-trash-alt':
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+      console.log(post);
 
       removePost(post);
 
@@ -234,24 +266,23 @@ deckOfPosts.addEventListener('click', e => {
     // create new comment to clicked post
     case 'btn-new-comment':
       // clicked post element
-      post =
-        e.target.parentNode.parentNode.parentNode.parentNode.parentNode
-          .parentNode;
+      post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.id;
       // get post object from array
-      fetchedPost = getPost(post.id);
-      console.log('hej');
+      fetchedPost = getPost(post);
+      console.log(fetchedPost);
 
       break;
 
     // show comments belonging to clicked post
     case 'btn-show-comments':
       // clicked post element
-      post =
-        e.target.parentNode.parentNode.parentNode.parentNode.parentNode
-          .parentNode;
+      console.log(
+        e.target.parentNode.parentNode.parentNode.parentNode.parentNode.id
+      );
+      post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.id;
       // get post object from array
-      fetchedPost = getPost(post.id);
-      console.log('hej då');
+      fetchedPost = getPost(post);
+      console.log(fetchedPost);
 
       break;
   }
