@@ -54,7 +54,7 @@ $ok: hsl(120, 47%, 39%);
 
 .post-title {
   @extend %post-inner-body;
-  height: 20%;
+  height: 4rem;
   border-bottom: 0.1rem solid hsla(0, 0%, 80%, 0.6);
   text-transform: uppercase;
 }
@@ -62,7 +62,7 @@ $ok: hsl(120, 47%, 39%);
 .post-text {
   @include flex;
   @extend %post-inner-body;
-  height: 70%;
+  min-height: 70%;
   justify-content: space-between;
   em {
     @include flex(row);
