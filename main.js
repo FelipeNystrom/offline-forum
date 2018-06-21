@@ -256,3 +256,5 @@ deckOfPosts.addEventListener('click', e => {
       break;
   }
 });
+
+generatePost();
