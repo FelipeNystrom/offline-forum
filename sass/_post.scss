@@ -27,13 +27,16 @@ $ok: hsl(120, 47%, 39%);
   box-shadow: $primary-shadow;
 }
 
-.post-body {
+%post-body-template {
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  @include flex;
   align-items: center;
   margin: 1rem 0;
   max-height: 100%;
+}
+
+.post-body {
+  @extend %post-body-template;
 }
 
 %post-inner-body {
@@ -93,7 +96,7 @@ $ok: hsl(120, 47%, 39%);
   max-height: 5rem;
 }
 
-.comments {
+.comments-control {
   @include flex(row);
   justify-content: space-between;
   min-width: 15rem;
@@ -103,4 +106,65 @@ $ok: hsl(120, 47%, 39%);
     @extend %btn;
     font-size: 0.8rem;
   }
+}
+
+.comment-input {
+  padding: 0.5rem 0;
+  @extend %post-body-template;
+  @extend %post-inner-body;
+  box-shadow: $primary-shadow;
+  border-radius: 1rem;
+  background-color: $post-background;
+  input,
+  textarea {
+    font-size: 0.9rem;
+    outline: none;
+    border: 0;
+    padding: 0.4rem;
+    margin: 1rem 0;
+    border-radius: 0.2rem;
+    background-color: $post-background;
+  }
+
+  .comment-text {
+    margin-top: 0.5rem;
+    @extend %post-inner-body;
+    max-height: 3.5rem;
+  }
+
+  .comment-form-input-row {
+    border-bottom: 0.1rem solid hsla(0, 0%, 80%, 0.4);
+    width: 90%;
+    @include flex(row);
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .comment-author,
+  .comment-title {
+    margin: 0.5rem 0;
+    width: 40%;
+  }
+
+  .btn-comment-submit {
+    @extend %btn;
+    @extend %post-inner-body;
+    width: 90%;
+    color: hsl(0, 0%, 100%);
+    background-color: $ok;
+    margin: 0.5rem 0;
+  }
+}
+
+.commentsSection {
+  @extend %post-body-template;
+}
+
+.comments-list {
+  display: none;
+}
+
+.comment-body {
+  @include flex;
+  @extend %post-inner-body;
 }

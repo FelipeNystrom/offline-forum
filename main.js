@@ -39,12 +39,12 @@ let _postId = 0;
 // ======== CREATE POST FUNCTIONS ========
 
 // makes a object from new post input form and pushes that object to array posts
-const pushPost = (titleInput, textInput, authorInput, imgInput, arr) => {
+const pushPost = (titleInput, textInput, authorInput, arr) => {
   let post = {
     title: titleInput,
     text: textInput,
     author: authorInput,
-    img: imgInput
+    comments: []
   };
 
   // generate post id
@@ -64,19 +64,16 @@ const generatePost = (post = null) => {
   // html structure for new post
   for (post of posts) {
     let newPost = `<div id="${post.id}" class="post">
-                    
                     <div class="post-body">
-                    
                         <div class="post-title"><h3>${post.title}</h3></div>
                         <div class="post-text"><p>${post.text}</p> 
                         <em><p> - ${post.author}</p></em>
                         </div>
                         <div class="post-footer">
-                          <div class="comments">
+                          <div class="comments-control">
                           <div><button class="btn-new-comment">New comment</button></div>
                             <div><button class="btn-show-comments">Show comment</button></div>
                           </div>
-                          
                           <div class="post-admin">
                             <p>
                               <a href="#inputSection"><i class="update fas fa-edit"></i></a>
@@ -86,9 +83,14 @@ const generatePost = (post = null) => {
                             </p>
                           </div>
                         </div>
-                        
-                    </div>
-                  </div>`;
+                        <div class="commentsSection">
+                        <ul class="comments-list" id="commentsOnPost-${
+                          post.id
+                        }"></ul>
+                        </div>
+                      </div>
+                    </div>`;
+
     // prevent loop to inject same post more than once
     if (post.id === _postId) {
       deckOfPosts.insertAdjacentHTML('beforeend', newPost);
@@ -125,7 +127,7 @@ const updatePost = postObj => {
   <input type="text" id="formTitle" value="${postObj.title}">
   <textarea id="formText" cols="30" rows="10">${postObj.text}</textarea>
   <div id="formAuthorInfo">
-      <input type="text" id="formAuthor" value="${postObj.authour}">
+      <input type="text" id="formAuthor" value="${postObj.author}">
       <input type="text" id="formAuthorImg" value="${postObj.img}">
   </div>
   <input class="btn-submit update-post" type="submit" value="update post">`;
