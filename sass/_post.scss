@@ -20,23 +20,11 @@ $ok: hsl(120, 47%, 39%);
   margin: 1rem 0;
   width: 90%;
   min-height: 15rem;
+  max-height: 50rem;
   background-color: $post-background;
   border-radius: 1rem;
   display: flex;
   box-shadow: $primary-shadow;
-}
-
-.post-img {
-  border-radius: 50%;
-  overflow: hidden;
-  flex: 1;
-  height: 100%;
-  max-width: 10rem;
-  // max-width: 30%;
-  background-color: aqua;
-  img {
-    width: 100%;
-  }
 }
 
 .post-body {
@@ -44,36 +32,52 @@ $ok: hsl(120, 47%, 39%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1rem;
+  margin: 1rem 0;
+  max-height: 100%;
 }
 
 %post-inner-body {
   width: 90%;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .post-title {
   @extend %post-inner-body;
-  height: 20%;
+  height: 3rem;
   border-bottom: 0.1rem solid hsla(0, 0%, 80%, 0.6);
   text-transform: uppercase;
+  h3 {
+    height: 100%;
+  }
 }
 
 .post-text {
+  @include flex;
   @extend %post-inner-body;
   height: 70%;
+  max-height: 30rem;
+  justify-content: space-between;
+  overflow: scroll;
+  margin: 0.5rem 0;
+  em {
+    @include flex(row);
+    justify-content: flex-end;
+    p {
+      text-transform: capitalize;
+    }
+  }
 }
 
 .post-admin {
-  @extend %post-inner-body;
   @include flex(row);
-  height: 10%;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding: 0.5rem;
   align-items: center;
   margin-bottom: 0.5rem;
   .delete {
     color: $danger;
     font-size: 1.5rem;
+    margin-left: 0.5rem;
   }
   .update {
     color: $change;
@@ -81,8 +85,22 @@ $ok: hsl(120, 47%, 39%);
   }
 }
 
-.post-crud {
+.post-footer {
+  @extend %post-inner-body;
   @include flex(row);
-  width: 20%;
   justify-content: space-between;
+  height: 25%;
+  max-height: 5rem;
+}
+
+.comments {
+  @include flex(row);
+  justify-content: space-between;
+  min-width: 15rem;
+  align-items: center;
+  .btn-new-comment,
+  .btn-show-comments {
+    @extend %btn;
+    font-size: 0.8rem;
+  }
 }
