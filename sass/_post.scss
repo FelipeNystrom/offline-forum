@@ -26,19 +26,6 @@ $ok: hsl(120, 47%, 39%);
   box-shadow: $primary-shadow;
 }
 
-.post-img {
-  border-radius: 50%;
-  overflow: hidden;
-  flex: 1;
-  height: 100%;
-  max-width: 10rem;
-  // max-width: 30%;
-  background-color: aqua;
-  img {
-    width: 100%;
-  }
-}
-
 .post-body {
   flex: 1;
   display: flex;
@@ -49,20 +36,24 @@ $ok: hsl(120, 47%, 39%);
 
 %post-inner-body {
   width: 90%;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .post-title {
   @extend %post-inner-body;
-  height: 4rem;
+  height: 3rem;
   border-bottom: 0.1rem solid hsla(0, 0%, 80%, 0.6);
   text-transform: uppercase;
+  h3 {
+    height: 100%;
+  }
 }
 
 .post-text {
   @include flex;
   @extend %post-inner-body;
-  min-height: 70%;
+  height: 70%;
+  max-height: 70%;
   justify-content: space-between;
   em {
     @include flex(row);
@@ -74,10 +65,9 @@ $ok: hsl(120, 47%, 39%);
 }
 
 .post-admin {
-  @extend %post-inner-body;
   @include flex(row);
-  height: 10%;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding: 0.5rem;
   align-items: center;
   margin-bottom: 0.5rem;
   .delete {
@@ -94,6 +84,7 @@ $ok: hsl(120, 47%, 39%);
   @extend %post-inner-body;
   @include flex(row);
   justify-content: space-between;
+  min-height: 10%;
 }
 
 .post-crud {
