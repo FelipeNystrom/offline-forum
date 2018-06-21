@@ -3,6 +3,8 @@
   flex-direction: $direction;
 }
 
+@import '_color-variables';
+
 /* Document settings */
 
 @import 'resetAndDocuConfig';
@@ -32,10 +34,13 @@
 
 #form {
   @include flex;
-  background-color: grey;
+  background-color: $post-background;
   padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: $primary-shadow;
   input,
   textarea {
+    outline: none;
     border: 0;
     padding: 0.4rem;
     margin: 1rem 0;
@@ -43,6 +48,15 @@
     border-radius: 0.2rem;
     background-color: rgb(255, 255, 255);
     color: grey;
+  }
+  input {
+    border-bottom: 0.1rem solid hsla(0, 0%, 80%, 0.6);
+  }
+  .btn-submit {
+    @extend %btn;
+    width: 100%;
+    color: hsl(0, 0%, 100%);
+    background-color: $ok;
   }
 }
 

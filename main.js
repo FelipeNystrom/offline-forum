@@ -51,15 +51,21 @@ const generatePost = (post = null) => {
                     <div class="post-body">
                     
                         <div class="post-title"><h3>${post.title}</h3></div>
-                        <div class="post-text">${post.text}</div>
-                        <div class="post-admin">
-                            <p>
-                                <i class="update fas fa-edit"></i>
-                            </p>
-                            <p>
-                                    <i class="delete far fa-trash-alt"></i>
-                            </p>
+                        <div class="post-text"><p>${post.text}</p> 
+                        <em><p> - ${post.author}</p></em>
                         </div>
+                        <div class="post-footer">
+                          <div class="date"><p></p></div>
+                          <div class="post-admin">
+                            <p>
+                              <i class="update fas fa-edit"></i>
+                            </p>
+                            <p>
+                              <i class="delete far fa-trash-alt"></i>
+                            </p>
+                          </div>
+                        </div>
+                        
                     </div>
                   </div>`;
     // prevent loop to inject same post more than once
@@ -101,7 +107,7 @@ const updatePost = postObj => {
       <input type="text" id="formAuthor" value="${postObj.authour}">
       <input type="text" id="formAuthorImg" value="${postObj.img}">
   </div>
-  <input class="update-post" type="submit" value="update post">`;
+  <input class="btn-submit update-post" type="submit" value="update post">`;
 
   // insert post value + update form
   form.insertAdjacentHTML('afterbegin', updatePostForm);
@@ -135,7 +141,7 @@ showInputSection.addEventListener('click', e => {
       <input type="text" id="formAuthor" placeholder="name of author">
       <input type="text" id="formAuthorImg" placeholder="author image">
   </div>
-  <input class="new-post" type="submit" value="make new post">`;
+  <input class="btn-submit new-post" type="submit" value="make new post">`;
 
   // disable nav button
   showInputSection.disabled = true;
@@ -158,11 +164,11 @@ form.addEventListener('submit', e => {
   let formAuthor = document.querySelector('#formAuthor').value;
   let formAuthorImg = document.querySelector('#formAuthorImg').value;
   // check which form is presented
-  if (e.target[4].className === 'new-post') {
+  if (e.target[4].className === 'btn-submit new-post') {
     // create object to push to arrary
     console.log(e.target[4].className);
     pushPost(formTitle, formText, formAuthor, formAuthorImg, posts);
-  } else if (e.target[5].className === 'update-post') {
+  } else if (e.target[5].className === 'btn-submit update-post') {
     // take post id and fetch object from array
     let postId = document.querySelector('#postId').value;
     let oldPost = getPost(postId);

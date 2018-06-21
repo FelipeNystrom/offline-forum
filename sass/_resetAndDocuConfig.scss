@@ -39,6 +39,7 @@ body {
   border-radius: 0.7rem;
   outline: none;
   border-style: none;
+  box-shadow: $primary-shadow;
 }
 
 main {
@@ -52,4 +53,10 @@ footer {
 
 .btn-show {
   @extend %btn;
+}
+
+.btn-submit {
+  @extend %btn;
+  width: 100%;
+  background-color: red;
 }
