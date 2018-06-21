@@ -5,6 +5,7 @@ const deckOfPosts = document.querySelector('#deckOfPosts');
 
 // Data variables
 let posts = [
+  // populated with dummy object
   {
     title: 'This is a post',
     text: 'some text',
