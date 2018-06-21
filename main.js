@@ -13,12 +13,12 @@ let _postId = 0;
 // ======== CREATE POST FUNCTIONS ========
 
 // makes a object from new post input form and pushes that object to array posts
-const pushPost = (titleInput, textInput, authorInput, imgInput, arr) => {
+const pushPost = (titleInput, textInput, authorInput, arr) => {
   let post = {
     title: titleInput,
     text: textInput,
     author: authorInput,
-    img: imgInput
+    comments: []
   };
 
   // generate post id
@@ -38,19 +38,16 @@ const generatePost = (post = null) => {
   // html structure for new post
   for (post of posts) {
     let newPost = `<div id="${post.id}" class="post">
-                    
                     <div class="post-body">
-                    
                         <div class="post-title"><h3>${post.title}</h3></div>
                         <div class="post-text"><p>${post.text}</p> 
                         <em><p> - ${post.author}</p></em>
                         </div>
                         <div class="post-footer">
-                          <div class="comments">
+                          <div class="comments-control">
                           <div><button class="btn-new-comment">New comment</button></div>
                             <div><button class="btn-show-comments">Show comment</button></div>
                           </div>
-                          
                           <div class="post-admin">
                             <p>
                               <a href="#inputSection"><i class="update fas fa-edit"></i></a>
@@ -60,9 +57,15 @@ const generatePost = (post = null) => {
                             </p>
                           </div>
                         </div>
-                        
-                    </div>
-                  </div>`;
+                        <div class="commentsSection">
+                        <ul class="comments-list" id="commentsOnPost-${
+                          post.id
+                        }"></ul>
+                        <form id="commentForm" class="comment-input"></form>
+                        </div>
+                      </div>
+                    </div>`;
+
     // prevent loop to inject same post more than once
     if (post.id === _postId) {
       deckOfPosts.insertAdjacentHTML('beforeend', newPost);
@@ -99,7 +102,7 @@ const updatePost = postObj => {
   <input type="text" id="formTitle" value="${postObj.title}">
   <textarea id="formText" cols="30" rows="10">${postObj.text}</textarea>
   <div id="formAuthorInfo">
-      <input type="text" id="formAuthor" value="${postObj.authour}">
+      <input type="text" id="formAuthor" value="${postObj.author}">
       <input type="text" id="formAuthorImg" value="${postObj.img}">
   </div>
   <input class="btn-submit update-post" type="submit" value="update post">`;
@@ -121,6 +124,56 @@ const removePost = postToRemove => {
   deckOfPosts.removeChild(postToRemove);
   posts = posts.filter(postID => postID === removePostId);
   console.log(posts);
+};
+
+// ======== COMMENTS ========
+
+const generateCommentForm = (whereToAttachForm, postId) => {
+  // html form to be inserted when new post is clicked
+  const newCommentForm = `
+    <input type="hidden" id="postId" value="${postId}">
+    <div class="comment-form-input-row">
+        <input type="text" class="comment-title" id="commentTitle" placeholder="comment title">
+        <input class="comment-author" type="text" id="commentAuthor" placeholder="author name">
+    </div>
+    <textarea class="comment-text" id="commentText" cols="2" rows="10" placeholder="write your comment"></textarea>
+    <input class="btn-comment-submit" type="submit" value="Leave comment">`;
+
+  // form insertion
+  whereToAttachForm.insertAdjacentHTML('afterbegin', newCommentForm);
+};
+
+// push comment to posts[].comments
+const pushComment = (commentTitle, commentAuthor, commentText, postId) => {
+  // create comment object
+  const commentObj = {
+    title: commentTitle,
+    text: commentText,
+    author: commentAuthor
+  };
+
+  // gets post object
+  let post = getPost(postId);
+
+  // pushes comment object to comments array
+  let commentArr = post.comments;
+  commentArr.push(commentObj);
+};
+
+const populateComments = (postId, placeToPopulate) => {
+  let comments = getPost(postId).comments;
+
+  for (comment of comments) {
+    let commentTemplate = `<li>
+      <div class="comment-body">
+        <div class="comment-body-title">${comment.title}</div>
+        <div class="comment-body-text">${comment.text}</div>
+        <div class="comment-body-author">${comment.author}</div>
+      </div>
+    </li>`;
+
+    placeToPopulate.insertAdjacentHTML('beforeend', commentTemplate);
+  }
 };
 
 // ======== EVENT LISTENERS ========
@@ -211,9 +264,14 @@ deckOfPosts.addEventListener('click', e => {
       // selects whole post element
       post =
         e.target.parentNode.parentNode.parentNode.parentNode.parentNode
-          .parentNode;
+          .parentNode.id;
+
+      console.log(
+        e.target.parentNode.parentNode.parentNode.parentNode.parentNode
+          .parentNode.id
+      );
       // get post object from array
-      fetchedPost = getPost(post.id);
+      fetchedPost = getPost(post);
       // generate update form and populate with post values from array
       updatePost(fetchedPost);
 
@@ -222,6 +280,7 @@ deckOfPosts.addEventListener('click', e => {
     // remove post choice
     case 'delete far fa-trash-alt':
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+      console.log(post);
 
       removePost(post);
 
@@ -233,25 +292,52 @@ deckOfPosts.addEventListener('click', e => {
 
     // create new comment to clicked post
     case 'btn-new-comment':
-      // clicked post element
-      post =
-        e.target.parentNode.parentNode.parentNode.parentNode.parentNode
-          .parentNode;
-      // get post object from array
+      // clicked post top element
+      post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+
+      // selects commentsSection to show new comment form
+
+      let commentsSection = post.childNodes[1].childNodes[7];
+      // selects form div to poulate with form
+      let createCommentForm = post.childNodes[1].childNodes[7].childNodes[3];
+      // generate and shows new post form
+      generateCommentForm(createCommentForm, post.id);
+      commentsSection.style.display = 'block';
+
+      // get post object from posts array
       fetchedPost = getPost(post.id);
-      console.log('hej');
+      console.log(fetchedPost);
+
+      // selects the write commente form
+      let commentForm = document.querySelector('#commentForm');
+
+      // when new comment is submited it is pushed to posts[].comments array and lastly removes the form
+      commentForm.addEventListener('submit', e => {
+        e.preventDefault();
+
+        let postId = document.querySelector('#postId').value;
+        let commentTitle = document.querySelector('#commentTitle').value;
+        let commentAuthor = document.querySelector('#commentAuthor').value;
+        let commentText = document.querySelector('#commentText').value;
+
+        pushComment(commentTitle, commentAuthor, commentText, postId);
+
+        commentForm.innerHTML = '';
+      });
 
       break;
 
     // show comments belonging to clicked post
     case 'btn-show-comments':
-      // clicked post element
-      post =
-        e.target.parentNode.parentNode.parentNode.parentNode.parentNode
-          .parentNode;
+      // clicked post top element
+      post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+      let ul = post.childNodes[1].childNodes[7].childNodes[1];
+      ul.style.display = 'block';
+
+      populateComments(post.id, ul);
       // get post object from array
       fetchedPost = getPost(post.id);
-      console.log('hej då');
+      console.log(fetchedPost);
 
       break;
   }
