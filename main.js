@@ -55,10 +55,14 @@ const generatePost = (post = null) => {
                         <em><p> - ${post.author}</p></em>
                         </div>
                         <div class="post-footer">
-                          <div class="date"><p></p></div>
+                          <div class="comments">
+                          <div><button class="btn-new-comment">New comment</button></div>
+                            <div><button class="btn-show-comments">Show comment</button></div>
+                          </div>
+                          
                           <div class="post-admin">
                             <p>
-                              <i class="update fas fa-edit"></i>
+                              <a href="#inputSection"><i class="update fas fa-edit"></i></a>
                             </p>
                             <p>
                               <i class="delete far fa-trash-alt"></i>
@@ -191,6 +195,7 @@ form.addEventListener('submit', e => {
     // re-enable new post button
     showInputSection.disabled = false;
   }
+
   // hides form section
   inputSection.style.display = 'none';
 
@@ -204,22 +209,60 @@ form.addEventListener('submit', e => {
 // delegated listener on posts.
 
 deckOfPosts.addEventListener('click', e => {
-  // update post choice
-  if (e.target.className === 'update fas fa-edit') {
-    // disable new post button
-    showInputSection.disabled = true;
+  let post;
+  let fetchedPost;
+  switch (e.target.className) {
+    // update post choice
+    case 'update fas fa-edit':
+      // disable new post button
+      showInputSection.disabled = true;
 
-    // selects whole post element
-    let post = e.target.parentNode.parentNode.parentNode.parentNode;
-    // get post object from array
-    let fetchedPost = getPost(post.id);
-    // generate update form and populate with post values from array
-    updatePost(fetchedPost);
+      // selects whole post element
+      post =
+        e.target.parentNode.parentNode.parentNode.parentNode.parentNode
+          .parentNode;
+      // get post object from array
+      fetchedPost = getPost(post.id);
+      // generate update form and populate with post values from array
+      updatePost(fetchedPost);
+
+      break;
 
     // remove post choice
-  } else if (e.target.className === 'delete far fa-trash-alt') {
-    let post = e.target.parentNode.parentNode.parentNode.parentNode;
-    removePost(post);
+    case 'delete far fa-trash-alt':
+      post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+
+      removePost(post);
+
+      if (posts.length === 0) {
+        _postId = 0;
+      }
+
+      break;
+
+    // create new comment to clicked post
+    case 'btn-new-comment':
+      // clicked post element
+      post =
+        e.target.parentNode.parentNode.parentNode.parentNode.parentNode
+          .parentNode;
+      // get post object from array
+      fetchedPost = getPost(post.id);
+      console.log('hej');
+
+      break;
+
+    // show comments belonging to clicked post
+    case 'btn-show-comments':
+      // clicked post element
+      post =
+        e.target.parentNode.parentNode.parentNode.parentNode.parentNode
+          .parentNode;
+      // get post object from array
+      fetchedPost = getPost(post.id);
+      console.log('hej då');
+
+      break;
   }
 });
 

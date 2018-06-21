@@ -77,6 +77,7 @@ $ok: hsl(120, 47%, 39%);
   .delete {
     color: $danger;
     font-size: 1.5rem;
+    margin-left: 0.5rem;
   }
   .update {
     color: $change;
@@ -90,4 +91,16 @@ $ok: hsl(120, 47%, 39%);
   justify-content: space-between;
   height: 25%;
   max-height: 5rem;
+}
+
+.comments {
+  @include flex(row);
+  justify-content: space-between;
+  min-width: 15rem;
+  align-items: center;
+  .btn-new-comment,
+  .btn-show-comments {
+    @extend %btn;
+    font-size: 0.8rem;
+  }
 }
