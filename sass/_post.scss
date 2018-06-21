@@ -14,6 +14,21 @@ $danger: hsl(0, 47%, 39%);
 $change: hsl(212, 47%, 39%);
 $ok: hsl(120, 47%, 39%);
 
+/* extends */
+
+%post-inner-body {
+  width: 90%;
+  padding: 0.5rem;
+}
+
+%post-body-template {
+  flex: 1;
+  @include flex;
+  align-items: center;
+  margin: 1rem 0;
+  max-height: 100%;
+}
+
 /* posts */
 
 .post {
@@ -27,21 +42,8 @@ $ok: hsl(120, 47%, 39%);
   box-shadow: $primary-shadow;
 }
 
-%post-body-template {
-  flex: 1;
-  @include flex;
-  align-items: center;
-  margin: 1rem 0;
-  max-height: 100%;
-}
-
 .post-body {
   @extend %post-body-template;
-}
-
-%post-inner-body {
-  width: 90%;
-  padding: 0.5rem;
 }
 
 .post-title {
@@ -109,11 +111,7 @@ $ok: hsl(120, 47%, 39%);
 }
 
 .comment-input {
-  padding: 0.5rem 0;
-  @extend %post-body-template;
-  @extend %post-inner-body;
-  box-shadow: $primary-shadow;
-  border-radius: 1rem;
+  padding: 0.5rem 0.5rem;
   background-color: $post-background;
   input,
   textarea {
@@ -128,13 +126,13 @@ $ok: hsl(120, 47%, 39%);
 
   .comment-text {
     margin-top: 0.5rem;
-    @extend %post-inner-body;
+    width: 100%;
     max-height: 3.5rem;
   }
 
   .comment-form-input-row {
     border-bottom: 0.1rem solid hsla(0, 0%, 80%, 0.4);
-    width: 90%;
+    min-width: 90%;
     @include flex(row);
     justify-content: space-between;
     align-items: center;
@@ -148,8 +146,7 @@ $ok: hsl(120, 47%, 39%);
 
   .btn-comment-submit {
     @extend %btn;
-    @extend %post-inner-body;
-    width: 90%;
+    width: 100%;
     color: hsl(0, 0%, 100%);
     background-color: $ok;
     margin: 0.5rem 0;
@@ -157,7 +154,7 @@ $ok: hsl(120, 47%, 39%);
 }
 
 .commentsSection {
-  @extend %post-body-template;
+  display: none;
 }
 
 .comments-list {

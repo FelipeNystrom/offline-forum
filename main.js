@@ -4,33 +4,7 @@ const form = document.querySelector('#form');
 const deckOfPosts = document.querySelector('#deckOfPosts');
 
 // Data variables
-let posts = [
-  // populated with dummy data
-  {
-    title: 'This is a post',
-    text:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing…cies ligula, et imperdiet urna erat vitae sapien.',
-    author: 'John Doe',
-    img: '',
-    id: 0
-  },
-  {
-    title: 'This is a post',
-    text:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing…cies ligula, et imperdiet urna erat vitae sapien. Lorem ipsum dolor sit amet, consectetur adipiscing…cies ligula, et imperdiet urna erat vitae sapien.Lorem ipsum dolor sit amet, consectetur adipiscing…cies ligula, et imperdiet urna erat vitae sapien.Lorem ipsum dolor sit amet, consectetur adipiscing…cies ligula, et imperdiet urna erat vitae sapien.',
-    author: 'John Doe',
-    img: '',
-    id: 1
-  },
-  {
-    title: 'This is a post',
-    text:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing…cies ligula, et imperdiet urna erat vitae sapien.',
-    author: 'John Doe',
-    img: '',
-    id: 2
-  }
-];
+let posts = [];
 
 let _postId = 0;
 
@@ -84,6 +58,7 @@ const generatePost = (post = null) => {
                           </div>
                         </div>
                         <div class="commentsSection">
+                        <form id="commentForm" class="comment-input"></form>
                         <ul class="comments-list" id="commentsOnPost-${
                           post.id
                         }"></ul>
@@ -149,6 +124,40 @@ const removePost = postToRemove => {
   deckOfPosts.removeChild(postToRemove);
   posts = posts.filter(postID => postID === removePostId);
   console.log(posts);
+};
+
+// ======== COMMENTS ========
+
+const generateCommentForm = (whereToAttachForm, postId) => {
+  // html form to be inserted when new post is clicked
+  const newCommentForm = `
+    <input type="hidden" id="postId" value="${postId}">
+    <div class="comment-form-input-row">
+        <input type="text" class="comment-title" id="commentTitle" placeholder="comment title">
+        <input class="comment-author" type="text" id="commentAuthor" placeholder="author name">
+    </div>
+    <textarea class="comment-text" id="commentText" cols="2" rows="10" placeholder="write your comment"></textarea>
+    <input class="btn-comment-submit" type="submit" value="Leave comment">`;
+
+  // form insertion
+  whereToAttachForm.insertAdjacentHTML('afterbegin', newCommentForm);
+};
+
+// push comment to posts[].comments
+const pushComment = (commentTitle, commentAuthor, commentText, postId) => {
+  // create comment object
+  const commentObj = {
+    title: commentTitle,
+    text: commentText,
+    author: commentAuthor
+  };
+
+  // gets post object
+  let post = getPost(postId);
+
+  // pushes comment object to comments array
+  let commentArr = post.comments;
+  commentArr.push(commentObj);
 };
 
 // ======== EVENT LISTENERS ========
@@ -267,11 +276,36 @@ deckOfPosts.addEventListener('click', e => {
 
     // create new comment to clicked post
     case 'btn-new-comment':
-      // clicked post element
-      post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.id;
-      // get post object from array
-      fetchedPost = getPost(post);
+      // clicked post top element
+      post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+
+      // selects commentsSection to show new comment form
+
+      let commentsSection = post.childNodes[1].childNodes[7];
+      // selects form div to poulate with form
+      let createCommentForm = post.childNodes[1].childNodes[7].childNodes[1];
+      // generate and shows new post form
+      generateCommentForm(createCommentForm, post.id);
+      commentsSection.style.display = 'block';
+
+      // get post object from posts array
+      fetchedPost = getPost(post.id);
       console.log(fetchedPost);
+
+      let commentForm = document.querySelector('#commentForm');
+
+      commentForm.addEventListener('submit', e => {
+        e.preventDefault();
+
+        let postId = document.querySelector('#postId').value;
+        let commentTitle = document.querySelector('#commentTitle').value;
+        let commentAuthor = document.querySelector('#commentAuthor').value;
+        let commentText = document.querySelector('#commentText').value;
+
+        pushComment(commentTitle, commentAuthor, commentText, postId);
+
+        commentForm.innerHTML = '';
+      });
 
       break;
 
