@@ -58,10 +58,10 @@ const generatePost = (post = null) => {
                           </div>
                         </div>
                         <div class="commentsSection">
-                        <form id="commentForm" class="comment-input"></form>
                         <ul class="comments-list" id="commentsOnPost-${
                           post.id
                         }"></ul>
+                        <form id="commentForm" class="comment-input"></form>
                         </div>
                       </div>
                     </div>`;
@@ -158,6 +158,22 @@ const pushComment = (commentTitle, commentAuthor, commentText, postId) => {
   // pushes comment object to comments array
   let commentArr = post.comments;
   commentArr.push(commentObj);
+};
+
+const populateComments = (postId, placeToPopulate) => {
+  let comments = getPost(postId).comments;
+
+  for (comment of comments) {
+    let commentTemplate = `<li>
+      <div class="comment-body">
+        <div class="comment-body-title">${comment.title}</div>
+        <div class="comment-body-text">${comment.text}</div>
+        <div class="comment-body-author">${comment.author}</div>
+      </div>
+    </li>`;
+
+    placeToPopulate.insertAdjacentHTML('beforeend', commentTemplate);
+  }
 };
 
 // ======== EVENT LISTENERS ========
@@ -283,7 +299,7 @@ deckOfPosts.addEventListener('click', e => {
 
       let commentsSection = post.childNodes[1].childNodes[7];
       // selects form div to poulate with form
-      let createCommentForm = post.childNodes[1].childNodes[7].childNodes[1];
+      let createCommentForm = post.childNodes[1].childNodes[7].childNodes[3];
       // generate and shows new post form
       generateCommentForm(createCommentForm, post.id);
       commentsSection.style.display = 'block';
@@ -292,8 +308,10 @@ deckOfPosts.addEventListener('click', e => {
       fetchedPost = getPost(post.id);
       console.log(fetchedPost);
 
+      // selects the write commente form
       let commentForm = document.querySelector('#commentForm');
 
+      // when new comment is submited it is pushed to posts[].comments array and lastly removes the form
       commentForm.addEventListener('submit', e => {
         e.preventDefault();
 
@@ -311,13 +329,14 @@ deckOfPosts.addEventListener('click', e => {
 
     // show comments belonging to clicked post
     case 'btn-show-comments':
-      // clicked post element
-      console.log(
-        e.target.parentNode.parentNode.parentNode.parentNode.parentNode.id
-      );
-      post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.id;
+      // clicked post top element
+      post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+      let ul = post.childNodes[1].childNodes[7].childNodes[1];
+      ul.style.display = 'block';
+
+      populateComments(post.id, ul);
       // get post object from array
-      fetchedPost = getPost(post);
+      fetchedPost = getPost(post.id);
       console.log(fetchedPost);
 
       break;
