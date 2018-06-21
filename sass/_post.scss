@@ -20,6 +20,7 @@ $ok: hsl(120, 47%, 39%);
   margin: 1rem 0;
   width: 90%;
   min-height: 15rem;
+  max-height: 50rem;
   background-color: $post-background;
   border-radius: 1rem;
   display: flex;
@@ -31,7 +32,8 @@ $ok: hsl(120, 47%, 39%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1rem;
+  margin: 1rem 0;
+  max-height: 100%;
 }
 
 %post-inner-body {
@@ -53,8 +55,10 @@ $ok: hsl(120, 47%, 39%);
   @include flex;
   @extend %post-inner-body;
   height: 70%;
-  max-height: 70%;
+  max-height: 30rem;
   justify-content: space-between;
+  overflow: scroll;
+  margin: 0.5rem 0;
   em {
     @include flex(row);
     justify-content: flex-end;
@@ -84,11 +88,6 @@ $ok: hsl(120, 47%, 39%);
   @extend %post-inner-body;
   @include flex(row);
   justify-content: space-between;
-  min-height: 10%;
-}
-
-.post-crud {
-  @include flex(row);
-  width: 20%;
-  justify-content: space-between;
+  height: 25%;
+  max-height: 5rem;
 }
