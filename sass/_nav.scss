@@ -1,18 +1,18 @@
-@mixin flex($direction: column) {
-  display: flex;
-  flex-direction: $direction;
-}
+// @mixin flex($direction: column) {
+//   display: flex;
+//   flex-direction: $direction;
+// }
 
-$primary-background: hsl(0, 0%, 95%);
-$secondary-background: hsl(313, 24%, 48%);
+// $primary-background: hsl(0, 0%, 95%);
+// $secondary-background: hsl(313, 24%, 48%);
 
-$primary-shadow: 10px 10px 20px -10px rgba(0, 0, 0, 0.15);
+// $primary-shadow: 10px 10px 20px -10px rgba(0, 0, 0, 0.15);
 
-$post-background: hsl(0, 0%, 100%);
+// $post-background: hsl(0, 0%, 100%);
 
-$danger: hsl(0, 47%, 39%);
-$change: hsl(212, 47%, 39%);
-$ok: hsl(120, 47%, 39%);
+// $danger: hsl(0, 47%, 39%);
+// $change: hsl(212, 47%, 39%);
+// $ok: hsl(120, 47%, 39%);
 
 header {
   height: 8rem;

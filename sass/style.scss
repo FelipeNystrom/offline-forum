@@ -1,9 +1,9 @@
-@mixin flex($direction: column) {
-  display: flex;
-  flex-direction: $direction;
-}
-
-@import '_color-variables';
+// @mixin flex($direction: column) {
+//   display: flex;
+//   flex-direction: $direction;
+// }
+@import 'mixins';
+@import 'variables';
 
 /* Document settings */
 
@@ -36,7 +36,7 @@
   @include flex;
   background-color: $post-background;
   padding: 1rem;
-  border-radius: 1rem;
+  border-radius: 0.2rem;
   box-shadow: $primary-shadow;
   input,
   textarea {
