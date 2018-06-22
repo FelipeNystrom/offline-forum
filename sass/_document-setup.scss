@@ -1,0 +1,16 @@
+body {
+  @include flex;
+  height: 100vh;
+  font-family: $font-stack;
+  background-color: $primary-color;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  background-color: $secondary-color;
+  min-height: 10rem;
+  border-top: 0.3rem solid $border-color;
+}

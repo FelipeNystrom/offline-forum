@@ -1,0 +1,14 @@
+#deckOfPosts,
+#formDiv {
+  @include flex;
+  align-items: center;
+}
+
+#inputSection {
+  display: none;
+}
+
+#formDiv {
+  margin: 1rem auto 0 auto;
+  width: 90%;
+}
