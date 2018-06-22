@@ -1,0 +1,14 @@
+/* extends */
+
+%post-inner-body {
+  width: 90%;
+  padding: 0.5rem;
+}
+
+%post-body-template {
+  flex: 1;
+  @include flex;
+  align-items: center;
+  margin: 1rem 0;
+  max-height: 100%;
+}
