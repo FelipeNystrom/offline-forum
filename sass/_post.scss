@@ -6,7 +6,8 @@
   min-height: 15rem;
   max-height: 50rem;
   background-color: $tertiary-color;
-  border-radius: 0.2rem;
+  border-radius: 0.3rem;
+  overflow: hidden;
   display: flex;
   box-shadow: $primary-shadow;
 }
@@ -16,11 +17,16 @@
 }
 
 .post-title {
-  @extend %post-inner-body;
-  height: 3rem;
-  border-bottom: 0.1rem solid hsla(0, 0%, 80%, 0.6);
+  width: 100%;
+  padding: 2rem 5%;
+  background-color: $title-color;
+  min-height: 3rem;
+  max-height: 5rem;
+  border-bottom: 0.2rem solid rgba($secondary-color, 0.6);
   text-transform: uppercase;
   h3 {
+    color: $font-color-light;
+    width: 100%;
     height: 100%;
   }
 }

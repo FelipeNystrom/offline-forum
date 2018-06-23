@@ -1,15 +1,15 @@
 %btn {
-  padding: 0.5rem;
+  padding: 0.7rem;
   border-radius: 0.7rem;
   outline: none;
   border-style: none;
   box-shadow: $primary-shadow;
+  color: $font-color-light;
 }
 
 .btn-show {
   @extend %btn;
   background-color: $button-color-ok;
-  color: $font-color-light;
 }
 
 .btn-submit {
@@ -19,7 +19,6 @@
 .btn-comment-submit {
   @extend %btn;
   width: 100%;
-  color: $font-color-light;
   background-color: $button-color-ok;
   margin: 0.5rem 0;
 }
@@ -28,7 +27,6 @@
 .btn-show-comments {
   @extend %btn;
   font-size: 0.8rem;
-  color: $font-color-light;
   background-color: $button-color-ok;
 }
 

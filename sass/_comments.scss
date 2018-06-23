@@ -54,15 +54,38 @@
 
 .commentsSection {
   display: none;
+  @extend %post-inner-body;
 }
 
 .comments-list {
   display: none;
+  list-style: none;
+  padding-top: 1.5rem;
 }
 
 // comment
 
 .comment-body {
   @include flex;
-  @extend %post-inner-body;
+  width: 100%;
+  min-height: 5rem;
+  border-bottom: 1px solid rgba($border-color, 0.6);
+}
+
+.comment-body-title {
+  height: 10%;
+
+  padding: 0.5rem;
+}
+
+.comment-body-text {
+  height: 70%;
+
+  padding: 0.5rem;
+}
+
+.comment-body-author {
+  height: 10%;
+
+  padding: 0.5rem;
 }
