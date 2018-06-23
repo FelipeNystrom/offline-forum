@@ -28,6 +28,8 @@
 .btn-show-comments {
   @extend %btn;
   font-size: 0.8rem;
+  color: $font-color-light;
+  background-color: $button-color-ok;
 }
 
 .btn-disabled {

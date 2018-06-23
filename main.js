@@ -191,8 +191,10 @@ showInputSection.addEventListener('click', e => {
   </div>
   <input class="btn-submit new-post" type="submit" value="make new post">`;
 
-  // disable nav button
+  // disable new post button and change it's style to class disabled
   showInputSection.disabled = true;
+  showInputSection.classList.remove('btn-show');
+  showInputSection.classList.add('btn-disabled');
 
   // inject create post form on site
   form.insertAdjacentHTML('beforeend', createPostForm);
@@ -238,6 +240,8 @@ form.addEventListener('submit', e => {
 
     // re-enable new post button
     showInputSection.disabled = false;
+    showInputSection.classList.add('btn-disabled');
+    showInputSection.classList.remove('btn-show');
   }
 
   // hides form section
@@ -246,8 +250,10 @@ form.addEventListener('submit', e => {
   // empty form section
   form.innerHTML = '';
 
-  // disable show input button
-  showInputSection.disabled = false;
+  // disable new post button and change it's style to class disabled
+  showInputSection.disabled = true;
+  showInputSection.classList.remove('btn-show');
+  showInputSection.classList.add('btn-disabled');
 });
 
 // delegated listener on posts.
@@ -258,8 +264,11 @@ deckOfPosts.addEventListener('click', e => {
   switch (e.target.className) {
     // update post choice
     case 'update fas fa-edit':
-      // disable new post button
+      // disable new post button and change it's style to class disabled
       showInputSection.disabled = true;
+      showInputSection.classList.remove('btn-show');
+      showInputSection.classList.add('btn-disabled');
+      console.log(showInputSection.classList);
 
       // selects whole post element
       post =
@@ -292,6 +301,10 @@ deckOfPosts.addEventListener('click', e => {
 
     // create new comment to clicked post
     case 'btn-new-comment':
+      // disable new post button and change it's style to class disabled
+      showInputSection.disabled = true;
+      showInputSection.classList.remove('btn-show');
+      showInputSection.classList.add('btn-disabled');
       // clicked post top element
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
 

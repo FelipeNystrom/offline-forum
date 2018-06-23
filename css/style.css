@@ -37,7 +37,7 @@ main {
   flex: 1;
 }
 
-.btn-disabled, .btn-new-comment,
+.comment-input .btn-comment-submit, .btn-disabled, .btn-new-comment,
 .btn-show-comments, .btn-comment-submit, .btn-submit, .btn-show {
   padding: 0.5rem;
   border-radius: 0.7rem;
@@ -61,6 +61,8 @@ main {
 .btn-new-comment,
 .btn-show-comments {
   font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #67a867;
 }
 
 .btn-disabled {
@@ -170,6 +172,12 @@ nav {
   margin: 1rem 0;
   border-radius: 0.2rem;
   background-color: #fdfdfd;
+}
+.comment-input .btn-comment-submit {
+  width: 100%;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #67a867;
+  margin: 0.5rem 0;
 }
 .comment-input .comment-text {
   margin-top: 0.5rem;

@@ -1,3 +1,5 @@
+// new comment form
+
 .comments-control {
   @include flex(row);
   justify-content: space-between;
@@ -17,6 +19,14 @@
     margin: 1rem 0;
     border-radius: 0.2rem;
     background-color: $tertiary-color;
+  }
+
+  .btn-comment-submit {
+    @extend %btn;
+    width: 100%;
+    color: $font-color-light;
+    background-color: $button-color-ok;
+    margin: 0.5rem 0;
   }
 
   .comment-text {
@@ -40,6 +50,8 @@
   }
 }
 
+// list of comments
+
 .commentsSection {
   display: none;
 }
@@ -47,6 +59,8 @@
 .comments-list {
   display: none;
 }
+
+// comment
 
 .comment-body {
   @include flex;
