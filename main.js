@@ -191,7 +191,6 @@ showInputSection.addEventListener('click', e => {
   </div>
   <input class="btn-submit new-post" type="submit" value="make new post">`;
 
-  // disable new post button and change it's style to class disabled
   showInputSection.disabled = true;
   showInputSection.classList.remove('btn-show');
   showInputSection.classList.add('btn-disabled');
@@ -238,10 +237,10 @@ form.addEventListener('submit', e => {
     // re-generate posts in array to DOM
     generatePost();
 
-    // re-enable new post button
+    // enable create post button
     showInputSection.disabled = false;
-    showInputSection.classList.add('btn-disabled');
-    showInputSection.classList.remove('btn-show');
+    showInputSection.classList.remove('btn-disabled');
+    showInputSection.classList.add('btn-show');
   }
 
   // hides form section
@@ -250,10 +249,10 @@ form.addEventListener('submit', e => {
   // empty form section
   form.innerHTML = '';
 
-  // disable new post button and change it's style to class disabled
-  showInputSection.disabled = true;
-  showInputSection.classList.remove('btn-show');
-  showInputSection.classList.add('btn-disabled');
+  // enable create post button
+  showInputSection.disabled = false;
+  showInputSection.classList.remove('btn-disabled');
+  showInputSection.classList.add('btn-show');
 });
 
 // delegated listener on posts.
@@ -301,10 +300,6 @@ deckOfPosts.addEventListener('click', e => {
 
     // create new comment to clicked post
     case 'btn-new-comment':
-      // disable new post button and change it's style to class disabled
-      showInputSection.disabled = true;
-      showInputSection.classList.remove('btn-show');
-      showInputSection.classList.add('btn-disabled');
       // clicked post top element
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
 
