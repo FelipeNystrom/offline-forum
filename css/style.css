@@ -37,7 +37,7 @@ main {
   flex: 1;
 }
 
-.comment-input .btn-comment-submit, .btn-disabled, .btn-new-comment,
+.comment-input .btn-comment-submit, .btn-disabled, .btn-comment-disabled, .btn-new-comment,
 .btn-show-comments, .btn-comment-submit, .btn-submit, .btn-show {
   padding: 0.7rem;
   border-radius: 0.7rem;
@@ -61,6 +61,11 @@ main {
 .btn-show-comments {
   font-size: 0.8rem;
   background-color: #67a867;
+}
+
+.btn-comment-disabled {
+  font-size: 0.8rem;
+  text-decoration: line-through;
 }
 
 .btn-disabled {
@@ -165,6 +170,7 @@ nav {
 }
 
 .comment-input {
+  margin-top: 2.5rem;
   padding: 0.5rem 0.5rem;
   background-color: #fdfdfd;
 }
@@ -206,6 +212,14 @@ nav {
 .commentsSection {
   display: none;
 }
+.commentsSection h3 {
+  text-align: center;
+  color: rgba(40, 56, 79, 0.8);
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  text-transform: capitalize;
+}
+
 .comments-list {
   display: none;
   list-style: none;
@@ -232,6 +246,9 @@ nav {
 
 .comment-body-author {
   height: 10%;
+  align-self: flex-end;
+  font-style: italic;
+  font-size: 0.9rem;
   padding: 0.5rem;
 }
 

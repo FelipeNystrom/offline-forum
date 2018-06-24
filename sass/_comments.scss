@@ -8,6 +8,7 @@
 }
 
 .comment-input {
+  margin-top: 2.5rem;
   padding: 0.5rem 0.5rem;
   background-color: $tertiary-color;
   input,
@@ -55,6 +56,13 @@
 .commentsSection {
   display: none;
   @extend %post-inner-body;
+  h3 {
+    text-align: center;
+    color: $font-color-dark;
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    text-transform: capitalize;
+  }
 }
 
 .comments-list {
@@ -86,10 +94,8 @@
 
 .comment-body-author {
   height: 10%;
-
+  align-self: flex-end;
+  font-style: italic;
+  font-size: 0.9rem;
   padding: 0.5rem;
-}
-
-#commmentSectionTitle {
-  text-transform: capitalize;
 }

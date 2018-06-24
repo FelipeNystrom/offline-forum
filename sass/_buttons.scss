@@ -30,6 +30,12 @@
   background-color: $button-color-ok;
 }
 
+.btn-comment-disabled {
+  @extend %btn;
+  font-size: 0.8rem;
+  text-decoration: line-through;
+}
+
 .btn-disabled {
   @extend %btn;
   text-decoration: line-through;

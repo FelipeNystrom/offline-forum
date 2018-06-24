@@ -164,9 +164,9 @@ const populateComments = (postId, placeToPopulate) => {
   for (comment of comments) {
     let commentTemplate = `<li>
       <div class="comment-body">
-        <div class="comment-body-title">${comment.title}</div>
+        <div class="comment-body-title"><h4>${comment.title}</h4></div>
         <div class="comment-body-text">${comment.text}</div>
-        <div class="comment-body-author">${comment.author}</div>
+        <div class="comment-body-author"> - ${comment.author}</div>
       </div>
     </li>`;
 
@@ -291,6 +291,11 @@ deckOfPosts.addEventListener('click', e => {
 
     // create new comment to clicked post
     case 'btn-new-comment':
+      // disable new comment button during wrinting session
+      e.target.disabled = true;
+      e.target.classList.remove('btn-new-comment');
+      e.target.classList.add('btn-comment-disabled');
+
       // clicked post top element
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
 
@@ -308,14 +313,14 @@ deckOfPosts.addEventListener('click', e => {
 
       // Choose and set comment section title dynamically
       let commentSectionTitle = commentsSection.childNodes[1];
-      commentSectionTitle.innerHTML = 'New Comment';
+      commentSectionTitle.innerHTML = 'Comments';
 
       // show whole section
       commentsSection.style.display = 'block';
 
       // selects the write commente form
       let commentForm = document.querySelector('#commentForm');
-
+      console.log(commentForm);
       // when new comment is submited it is pushed to posts[].comments array and lastly removes the form
       commentForm.addEventListener('submit', e => {
         e.preventDefault();
@@ -328,6 +333,10 @@ deckOfPosts.addEventListener('click', e => {
         pushComment(commentTitle, commentAuthor, commentText, postId);
 
         commentForm.innerHTML = '';
+
+        let ul = post.childNodes[1].childNodes[7].childNodes[3];
+        ul.style.display = 'block';
+        populateComments(post.id, ul);
       });
 
       break;
