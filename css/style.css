@@ -1,0 +1,322 @@
+/* Imports */
+/* extends */
+.commentsSection, .post-footer, .post-text {
+  width: 90%;
+  padding: 0.5rem;
+}
+
+.post-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+  max-height: 100%;
+}
+
+/* Document sections */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: #dde2eb;
+}
+
+main {
+  flex: 1;
+}
+
+.comment-input .btn-comment-submit, .btn-disabled, .btn-comment-disabled, .btn-new-comment,
+.btn-show-comments, .btn-comment-submit, .btn-submit, .btn-show {
+  padding: 0.7rem;
+  border-radius: 0.7rem;
+  outline: none;
+  border-style: none;
+  box-shadow: 10px 10px 20px -10px rgba(40, 56, 79, 0.15);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.btn-show {
+  background-color: #67a867;
+}
+
+.btn-comment-submit {
+  width: 100%;
+  background-color: #67a867;
+  margin: 0.5rem 0;
+}
+
+.btn-new-comment,
+.btn-show-comments {
+  font-size: 0.8rem;
+  background-color: #67a867;
+}
+
+.btn-comment-disabled {
+  font-size: 0.8rem;
+  text-decoration: line-through;
+}
+
+.btn-disabled {
+  text-decoration: line-through;
+}
+
+header {
+  height: 8rem;
+  background-color: #45556e;
+  border-bottom: 0.3rem solid #28384f;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  color: rgba(255, 255, 255, 0.8);
+  width: 80%;
+  margin: 2.5rem auto;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+
+/* posts */
+.post {
+  margin: 1rem 0;
+  width: 90%;
+  min-height: 15rem;
+  max-height: 50rem;
+  background-color: #fdfdfd;
+  border-radius: 0.3rem;
+  overflow: hidden;
+  display: flex;
+  box-shadow: 10px 10px 20px -10px rgba(40, 56, 79, 0.15);
+}
+
+.post-title {
+  width: 100%;
+  padding: 2rem 5%;
+  background-color: #835050;
+  min-height: 3rem;
+  max-height: 5rem;
+  border-bottom: 0.2rem solid rgba(69, 85, 110, 0.6);
+  text-transform: uppercase;
+}
+.post-title h3 {
+  color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  height: 100%;
+}
+
+.post-text {
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  max-height: 30rem;
+  justify-content: space-between;
+  overflow: scroll;
+  margin: 0.5rem 0;
+}
+.post-text em {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.post-text em p {
+  text-transform: capitalize;
+}
+
+.post-admin {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.post-admin .delete {
+  color: #923535;
+  font-size: 1.5rem;
+  margin-left: 0.5rem;
+}
+.post-admin .update {
+  color: #356092;
+  font-size: 1.5rem;
+}
+
+.post-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 25%;
+  max-height: 5rem;
+}
+
+.comments-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  min-width: 15rem;
+  align-items: center;
+}
+
+.comment-input {
+  margin-top: 2.5rem;
+  padding: 0.5rem 0.5rem;
+  background-color: #fdfdfd;
+}
+.comment-input input,
+.comment-input textarea {
+  font-size: 0.9rem;
+  outline: none;
+  border: 0;
+  padding: 0.4rem;
+  margin: 1rem 0;
+  border-radius: 0.2rem;
+  background-color: #fdfdfd;
+}
+.comment-input .btn-comment-submit {
+  width: 100%;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #67a867;
+  margin: 0.5rem 0;
+}
+.comment-input .comment-text {
+  margin-top: 0.5rem;
+  width: 100%;
+  max-height: 3.5rem;
+}
+.comment-input .comment-form-input-row {
+  border-bottom: 0.1rem solid rgba(204, 204, 204, 0.4);
+  min-width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.comment-input .comment-author,
+.comment-input .comment-title {
+  margin: 0.5rem 0;
+  width: 40%;
+}
+
+.commentsSection {
+  display: none;
+}
+.commentsSection h3 {
+  text-align: center;
+  color: rgba(40, 56, 79, 0.8);
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  text-transform: capitalize;
+}
+
+.comments-list {
+  display: none;
+  list-style: none;
+  padding-top: 1.5rem;
+}
+
+.comment-body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 5rem;
+  border-bottom: 1px solid rgba(40, 56, 79, 0.6);
+}
+
+.comment-body-title {
+  height: 10%;
+  padding: 0.5rem;
+}
+
+.comment-body-text {
+  height: 70%;
+  padding: 0.5rem;
+}
+
+.comment-body-author {
+  height: 10%;
+  align-self: flex-end;
+  font-style: italic;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+}
+
+#deckOfPosts,
+#formDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#inputSection {
+  display: none;
+}
+
+#formDiv {
+  margin: 1rem auto 0 auto;
+  width: 90%;
+}
+
+#form {
+  display: flex;
+  flex-direction: column;
+  background-color: #fdfdfd;
+  padding: 1rem;
+  border-radius: 0.2rem;
+  box-shadow: 10px 10px 20px -10px rgba(40, 56, 79, 0.15);
+}
+#form input,
+#form textarea {
+  outline: none;
+  border: 0;
+  padding: 0.4rem;
+  margin: 1rem 0;
+  width: 100%;
+  border-radius: 0.2rem;
+  background-color: white;
+  color: grey;
+}
+#form input {
+  border-bottom: 0.1rem solid rgba(204, 204, 204, 0.6);
+}
+#form .btn-submit {
+  background-color: #67a867;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#form,
+#formAuthorInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+#formAuthorInfo input {
+  padding: 0.4rem;
+  width: 40%;
+  border-radius: 0.2rem;
+}
+
+#forum-name {
+  text-transform: uppercase;
+  font-size: 1.3rem;
+  padding-top: 0.3rem;
+}
+
+footer {
+  background-color: #45556e;
+  min-height: 10rem;
+  border-top: 0.3rem solid #28384f;
+}
+
+/*# sourceMappingURL=style.css.map */
