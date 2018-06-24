@@ -26,7 +26,6 @@ const pushPost = (titleInput, textInput, authorInput, arr) => {
   post.id = arr.length;
 
   posts.push(post);
-  debugger;
   generatePost(post);
 };
 
@@ -69,9 +68,7 @@ const generatePost = (post = null) => {
     if (post.id === _postId) {
       deckOfPosts.insertAdjacentHTML('beforeend', newPost);
       _postId++;
-      debugger;
     } else if (_postId === post.id) {
-      debugger;
       deckOfPosts.insertAdjacentHTML('beforeend', newPost);
       _postId++;
     }
@@ -120,17 +117,14 @@ const updatePost = postObj => {
 // delete post through id
 
 const removePost = postToRemove => {
-  console.log(postToRemove);
   let removePostId = parseInt(postToRemove.id);
   deckOfPosts.removeChild(postToRemove);
   posts = posts.filter(postID => postID === removePostId);
-  console.log(posts);
 };
 
 // ======== COMMENTS ========
 
 const generateCommentForm = (whereToAttachForm, postId) => {
-  debugger;
   // html form to be inserted when new post is clicked
   const newCommentForm = `
     <input type="hidden" id="postId" value="${postId}">
@@ -219,7 +213,6 @@ form.addEventListener('submit', e => {
   // check which form is presented
   if (e.target[4].className === 'btn-submit new-post') {
     // create object to push to arrary
-    console.log(e.target[4].className);
     pushPost(formTitle, formText, formAuthor, posts);
   } else if (e.target[5].className === 'btn-submit update-post') {
     // take post id and fetch object from array
@@ -271,17 +264,12 @@ deckOfPosts.addEventListener('click', e => {
       showInputSection.disabled = true;
       showInputSection.classList.remove('btn-show');
       showInputSection.classList.add('btn-disabled');
-      console.log(showInputSection.classList);
 
       // selects whole post element
       post =
         e.target.parentNode.parentNode.parentNode.parentNode.parentNode
           .parentNode.id;
 
-      console.log(
-        e.target.parentNode.parentNode.parentNode.parentNode.parentNode
-          .parentNode.id
-      );
       // get post object from array
       fetchedPost = getPost(post);
       // generate update form and populate with post values from array
@@ -292,7 +280,6 @@ deckOfPosts.addEventListener('click', e => {
     // remove post choice
     case 'delete far fa-trash-alt':
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
-      console.log(post);
 
       removePost(post);
 
@@ -306,25 +293,21 @@ deckOfPosts.addEventListener('click', e => {
     case 'btn-new-comment':
       // clicked post top element
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
-      console.log(post.id);
+
       // selects commentsSection to show new comment form
-      console.log(post.childNodes);
       let commentsSection = post.childNodes[1].childNodes[7];
-      console.log(commentsSection.childNodes);
+
       // selects form div to poulate with form
       let createCommentForm = post.childNodes[1].childNodes[7].childNodes[5];
-      debugger;
 
       // get post object from posts array
       fetchedPost = getPost(post.id);
-      console.log(fetchedPost);
 
       // generate and shows new post form
       generateCommentForm(createCommentForm, post.id);
 
       // Choose and set comment section title dynamically
       let commentSectionTitle = commentsSection.childNodes[1];
-      console.log(commentSectionTitle);
       commentSectionTitle.innerHTML = 'New Comment';
 
       // show whole section
@@ -359,7 +342,6 @@ deckOfPosts.addEventListener('click', e => {
       populateComments(post.id, ul);
       // get post object from array
       fetchedPost = getPost(post.id);
-      console.log(fetchedPost);
 
       break;
   }
