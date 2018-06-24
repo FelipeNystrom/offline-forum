@@ -22,13 +22,11 @@ const pushPost = (titleInput, textInput, authorInput, arr) => {
   };
 
   // generate post id
-  if (arr.length === 0) {
-    post.id = 0;
-  } else {
-    post.id = arr.length;
-  }
+
+  post.id = arr.length;
 
   posts.push(post);
+  debugger;
   generatePost(post);
 };
 
@@ -69,9 +67,9 @@ const generatePost = (post = null) => {
 
     // prevent loop to inject same post more than once
     if (post.id === _postId) {
-      debugger;
       deckOfPosts.insertAdjacentHTML('beforeend', newPost);
       _postId++;
+      debugger;
     } else if (_postId === post.id) {
       debugger;
       deckOfPosts.insertAdjacentHTML('beforeend', newPost);
@@ -222,7 +220,7 @@ form.addEventListener('submit', e => {
   if (e.target[4].className === 'btn-submit new-post') {
     // create object to push to arrary
     console.log(e.target[4].className);
-    pushPost(formTitle, formText, formAuthor, formAuthorImg, posts);
+    pushPost(formTitle, formText, formAuthor, posts);
   } else if (e.target[5].className === 'btn-submit update-post') {
     // take post id and fetch object from array
     let postId = document.querySelector('#postId').value;
