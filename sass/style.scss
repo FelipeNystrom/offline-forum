@@ -1,84 +1,14 @@
-@mixin flex($direction: column) {
-  display: flex;
-  flex-direction: $direction;
-}
-
-@import '_color-variables';
-
-/* Document settings */
-
-@import 'resetAndDocuConfig';
-
-/* Nav */
-
+/* Imports */
+@import 'mixins';
+@import 'variables';
+@import 'extends';
+/* Document sections */
+@import 'reset';
+@import 'document-setup';
+@import 'buttons';
 @import 'nav';
-
-/* Posts */
-
 @import 'post';
-
-#deckOfPosts,
-#formDiv {
-  @include flex;
-  align-items: center;
-}
-
-#inputSection {
-  display: none;
-}
-
-#formDiv {
-  margin: 1rem auto 0 auto;
-  width: 90%;
-}
-
-#form {
-  @include flex;
-  background-color: $post-background;
-  padding: 1rem;
-  border-radius: 1rem;
-  box-shadow: $primary-shadow;
-  input,
-  textarea {
-    outline: none;
-    border: 0;
-    padding: 0.4rem;
-    margin: 1rem 0;
-    width: 100%;
-    border-radius: 0.2rem;
-    background-color: rgb(255, 255, 255);
-    color: grey;
-  }
-  input {
-    border-bottom: 0.1rem solid hsla(0, 0%, 80%, 0.6);
-  }
-  .btn-submit {
-    @extend %btn;
-    width: 100%;
-    color: hsl(0, 0%, 100%);
-    background-color: $ok;
-  }
-}
-
-#form,
-#formAuthorInfo {
-  display: flex;
-  justify-content: space-between;
-}
-
-#formAuthorInfo {
-  input {
-    padding: 0.4rem;
-    width: 40%;
-    border-radius: 0.2rem;
-  }
-}
-
-#forum-name {
-  text-transform: uppercase;
-  font-size: 1.3rem;
-  padding-top: 0.3rem;
-}
-
-// #showInputSection {
-// }
+@import 'comments';
+@import 'section-setup';
+@import 'forms';
+@import 'footer';

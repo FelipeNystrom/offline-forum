@@ -1,0 +1,10 @@
+body {
+  @include flex;
+  height: 100vh;
+  font-family: $font-stack;
+  background-color: $primary-color;
+}
+
+main {
+  flex: 1;
+}

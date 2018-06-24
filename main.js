@@ -22,11 +22,8 @@ const pushPost = (titleInput, textInput, authorInput, arr) => {
   };
 
   // generate post id
-  if (arr.length === 0) {
-    post.id = 0;
-  } else {
-    post.id = arr.length;
-  }
+
+  post.id = arr.length;
 
   posts.push(post);
   generatePost(post);
@@ -58,6 +55,7 @@ const generatePost = (post = null) => {
                           </div>
                         </div>
                         <div class="commentsSection">
+                        <h3 id="commentSectionTitle"></h3>
                         <ul class="comments-list" id="commentsOnPost-${
                           post.id
                         }"></ul>
@@ -119,11 +117,9 @@ const updatePost = postObj => {
 // delete post through id
 
 const removePost = postToRemove => {
-  console.log(postToRemove);
   let removePostId = parseInt(postToRemove.id);
   deckOfPosts.removeChild(postToRemove);
   posts = posts.filter(postID => postID === removePostId);
-  console.log(posts);
 };
 
 // ======== COMMENTS ========
@@ -145,15 +141,17 @@ const generateCommentForm = (whereToAttachForm, postId) => {
 
 // push comment to posts[].comments
 const pushComment = (commentTitle, commentAuthor, commentText, postId) => {
+  // gets post with id
+  let post = getPost(postId);
+
+  let id = post.comments.length;
   // create comment object
   const commentObj = {
+    id: id,
     title: commentTitle,
     text: commentText,
     author: commentAuthor
   };
-
-  // gets post object
-  let post = getPost(postId);
 
   // pushes comment object to comments array
   let commentArr = post.comments;
@@ -166,9 +164,9 @@ const populateComments = (postId, placeToPopulate) => {
   for (comment of comments) {
     let commentTemplate = `<li>
       <div class="comment-body">
-        <div class="comment-body-title">${comment.title}</div>
+        <div class="comment-body-title"><h4>${comment.title}</h4></div>
         <div class="comment-body-text">${comment.text}</div>
-        <div class="comment-body-author">${comment.author}</div>
+        <div class="comment-body-author"> - ${comment.author}</div>
       </div>
     </li>`;
 
@@ -191,8 +189,9 @@ showInputSection.addEventListener('click', e => {
   </div>
   <input class="btn-submit new-post" type="submit" value="make new post">`;
 
-  // disable nav button
   showInputSection.disabled = true;
+  showInputSection.classList.remove('btn-show');
+  showInputSection.classList.add('btn-disabled');
 
   // inject create post form on site
   form.insertAdjacentHTML('beforeend', createPostForm);
@@ -214,8 +213,7 @@ form.addEventListener('submit', e => {
   // check which form is presented
   if (e.target[4].className === 'btn-submit new-post') {
     // create object to push to arrary
-    console.log(e.target[4].className);
-    pushPost(formTitle, formText, formAuthor, formAuthorImg, posts);
+    pushPost(formTitle, formText, formAuthor, posts);
   } else if (e.target[5].className === 'btn-submit update-post') {
     // take post id and fetch object from array
     let postId = document.querySelector('#postId').value;
@@ -236,8 +234,10 @@ form.addEventListener('submit', e => {
     // re-generate posts in array to DOM
     generatePost();
 
-    // re-enable new post button
+    // enable create post button
     showInputSection.disabled = false;
+    showInputSection.classList.remove('btn-disabled');
+    showInputSection.classList.add('btn-show');
   }
 
   // hides form section
@@ -246,8 +246,10 @@ form.addEventListener('submit', e => {
   // empty form section
   form.innerHTML = '';
 
-  // disable show input button
+  // enable create post button
   showInputSection.disabled = false;
+  showInputSection.classList.remove('btn-disabled');
+  showInputSection.classList.add('btn-show');
 });
 
 // delegated listener on posts.
@@ -258,18 +260,16 @@ deckOfPosts.addEventListener('click', e => {
   switch (e.target.className) {
     // update post choice
     case 'update fas fa-edit':
-      // disable new post button
+      // disable new post button and change it's style to class disabled
       showInputSection.disabled = true;
+      showInputSection.classList.remove('btn-show');
+      showInputSection.classList.add('btn-disabled');
 
       // selects whole post element
       post =
         e.target.parentNode.parentNode.parentNode.parentNode.parentNode
           .parentNode.id;
 
-      console.log(
-        e.target.parentNode.parentNode.parentNode.parentNode.parentNode
-          .parentNode.id
-      );
       // get post object from array
       fetchedPost = getPost(post);
       // generate update form and populate with post values from array
@@ -280,7 +280,6 @@ deckOfPosts.addEventListener('click', e => {
     // remove post choice
     case 'delete far fa-trash-alt':
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
-      console.log(post);
 
       removePost(post);
 
@@ -292,25 +291,36 @@ deckOfPosts.addEventListener('click', e => {
 
     // create new comment to clicked post
     case 'btn-new-comment':
+      // disable new comment button during wrinting session
+      e.target.disabled = true;
+      e.target.classList.remove('btn-new-comment');
+      e.target.classList.add('btn-comment-disabled');
+
       // clicked post top element
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
 
       // selects commentsSection to show new comment form
-
       let commentsSection = post.childNodes[1].childNodes[7];
+
       // selects form div to poulate with form
-      let createCommentForm = post.childNodes[1].childNodes[7].childNodes[3];
-      // generate and shows new post form
-      generateCommentForm(createCommentForm, post.id);
-      commentsSection.style.display = 'block';
+      let createCommentForm = post.childNodes[1].childNodes[7].childNodes[5];
 
       // get post object from posts array
       fetchedPost = getPost(post.id);
-      console.log(fetchedPost);
+
+      // generate and shows new post form
+      generateCommentForm(createCommentForm, post.id);
+
+      // Choose and set comment section title dynamically
+      let commentSectionTitle = commentsSection.childNodes[1];
+      commentSectionTitle.innerHTML = 'Comments';
+
+      // show whole section
+      commentsSection.style.display = 'block';
 
       // selects the write commente form
       let commentForm = document.querySelector('#commentForm');
-
+      console.log(commentForm);
       // when new comment is submited it is pushed to posts[].comments array and lastly removes the form
       commentForm.addEventListener('submit', e => {
         e.preventDefault();
@@ -323,6 +333,10 @@ deckOfPosts.addEventListener('click', e => {
         pushComment(commentTitle, commentAuthor, commentText, postId);
 
         commentForm.innerHTML = '';
+
+        let ul = post.childNodes[1].childNodes[7].childNodes[3];
+        ul.style.display = 'block';
+        populateComments(post.id, ul);
       });
 
       break;
@@ -331,13 +345,12 @@ deckOfPosts.addEventListener('click', e => {
     case 'btn-show-comments':
       // clicked post top element
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
-      let ul = post.childNodes[1].childNodes[7].childNodes[1];
+      let ul = post.childNodes[1].childNodes[7].childNodes[3];
       ul.style.display = 'block';
 
       populateComments(post.id, ul);
       // get post object from array
       fetchedPost = getPost(post.id);
-      console.log(fetchedPost);
 
       break;
   }
