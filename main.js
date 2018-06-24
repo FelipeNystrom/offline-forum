@@ -58,6 +58,7 @@ const generatePost = (post = null) => {
                           </div>
                         </div>
                         <div class="commentsSection">
+                        <h3 id="commentSectionTitle"></h3>
                         <ul class="comments-list" id="commentsOnPost-${
                           post.id
                         }"></ul>
@@ -68,9 +69,11 @@ const generatePost = (post = null) => {
 
     // prevent loop to inject same post more than once
     if (post.id === _postId) {
+      debugger;
       deckOfPosts.insertAdjacentHTML('beforeend', newPost);
       _postId++;
     } else if (_postId === post.id) {
+      debugger;
       deckOfPosts.insertAdjacentHTML('beforeend', newPost);
       _postId++;
     }
@@ -129,6 +132,7 @@ const removePost = postToRemove => {
 // ======== COMMENTS ========
 
 const generateCommentForm = (whereToAttachForm, postId) => {
+  debugger;
   // html form to be inserted when new post is clicked
   const newCommentForm = `
     <input type="hidden" id="postId" value="${postId}">
@@ -145,15 +149,17 @@ const generateCommentForm = (whereToAttachForm, postId) => {
 
 // push comment to posts[].comments
 const pushComment = (commentTitle, commentAuthor, commentText, postId) => {
+  // gets post with id
+  let post = getPost(postId);
+
+  let id = post.comments.length;
   // create comment object
   const commentObj = {
+    id: id,
     title: commentTitle,
     text: commentText,
     author: commentAuthor
   };
-
-  // gets post object
-  let post = getPost(postId);
 
   // pushes comment object to comments array
   let commentArr = post.comments;
@@ -302,19 +308,29 @@ deckOfPosts.addEventListener('click', e => {
     case 'btn-new-comment':
       // clicked post top element
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
-
+      console.log(post.id);
       // selects commentsSection to show new comment form
-
+      console.log(post.childNodes);
       let commentsSection = post.childNodes[1].childNodes[7];
+      console.log(commentsSection.childNodes);
       // selects form div to poulate with form
-      let createCommentForm = post.childNodes[1].childNodes[7].childNodes[3];
-      // generate and shows new post form
-      generateCommentForm(createCommentForm, post.id);
-      commentsSection.style.display = 'block';
+      let createCommentForm = post.childNodes[1].childNodes[7].childNodes[5];
+      debugger;
 
       // get post object from posts array
       fetchedPost = getPost(post.id);
       console.log(fetchedPost);
+
+      // generate and shows new post form
+      generateCommentForm(createCommentForm, post.id);
+
+      // Choose and set comment section title dynamically
+      let commentSectionTitle = commentsSection.childNodes[1];
+      console.log(commentSectionTitle);
+      commentSectionTitle.innerHTML = 'New Comment';
+
+      // show whole section
+      commentsSection.style.display = 'block';
 
       // selects the write commente form
       let commentForm = document.querySelector('#commentForm');
@@ -339,7 +355,7 @@ deckOfPosts.addEventListener('click', e => {
     case 'btn-show-comments':
       // clicked post top element
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
-      let ul = post.childNodes[1].childNodes[7].childNodes[1];
+      let ul = post.childNodes[1].childNodes[7].childNodes[3];
       ul.style.display = 'block';
 
       populateComments(post.id, ul);
