@@ -72,3 +72,9 @@
   height: 25%;
   max-height: 5rem;
 }
+
+@media (min-width: 768px) {
+  .post {
+    width: 30%;
+  }
+}
