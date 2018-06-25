@@ -23,6 +23,7 @@
 @media (min-width: 768px) {
   #deckOfPosts {
     @include flex(row);
-    width: 90%;
+    width: 95%;
+    flex-wrap: wrap;
   }
 }
