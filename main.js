@@ -350,6 +350,7 @@ deckOfPosts.addEventListener('click', e => {
 
         let ul = post.childNodes[1].childNodes[7].childNodes[3];
         ul.style.display = 'block';
+        ul.innerHTML = '';
         populateComments(post.id, ul);
 
         // re-enable create post button

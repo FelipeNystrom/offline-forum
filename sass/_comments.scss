@@ -28,6 +28,14 @@
     color: $font-color-light;
     background-color: $button-color-ok;
     margin: 0.5rem 0;
+    &:hover {
+      @extend %hover;
+      background-color: lighten($button-color-ok, 5%);
+      border-bottom: 0.2rem solid darken($button-color-ok, 15%);
+    }
+    &:active {
+      @extend %active;
+    }
   }
 
   .comment-text {
@@ -69,6 +77,8 @@
   display: none;
   list-style: none;
   padding-top: 1.5rem;
+  max-height: 20rem;
+  overflow: scroll;
 }
 
 // comment
