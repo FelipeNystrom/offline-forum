@@ -158,9 +158,11 @@ const pushComment = (commentTitle, commentAuthor, commentText, postId) => {
   commentArr.push(commentObj);
 };
 
+// Generate comments from posts[].comments
 const populateComments = (postId, placeToPopulate) => {
   let comments = getPost(postId).comments;
 
+  // Generate comment element structure
   for (comment of comments) {
     let commentTemplate = `<li>
       <div class="comment-body">
@@ -169,7 +171,7 @@ const populateComments = (postId, placeToPopulate) => {
         <div class="comment-body-author"> - ${comment.author}</div>
       </div>
     </li>`;
-
+    // insert comment to DOM
     placeToPopulate.insertAdjacentHTML('beforeend', commentTemplate);
   }
 };
@@ -255,10 +257,16 @@ form.addEventListener('submit', e => {
 // delegated listener on posts.
 
 deckOfPosts.addEventListener('click', e => {
+  // Postelement
   let post;
+
+  // Postobject from array
   let fetchedPost;
+
+  // Switch statement to catch diffrent click scenarios
+
   switch (e.target.className) {
-    // update post choice
+    // update post button
     case 'update fas fa-edit':
       // disable new post button and change it's style to class disabled
       showInputSection.disabled = true;
@@ -277,7 +285,7 @@ deckOfPosts.addEventListener('click', e => {
 
       break;
 
-    // remove post choice
+    // remove post button
     case 'delete far fa-trash-alt':
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
 
@@ -289,7 +297,7 @@ deckOfPosts.addEventListener('click', e => {
 
       break;
 
-    // create new comment to clicked post
+    // create new comment on post
     case 'btn-new-comment':
       // disable new comment button during wrinting session
       e.target.disabled = true;
@@ -341,7 +349,7 @@ deckOfPosts.addEventListener('click', e => {
 
       break;
 
-    // show comments belonging to clicked post
+    // show comments belonging to post
     case 'btn-show-comments':
       // clicked post top element
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
