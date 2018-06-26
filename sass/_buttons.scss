@@ -1,0 +1,72 @@
+%btn {
+  padding: 0.7rem;
+  border-radius: 0.7rem;
+  outline: none;
+  border-style: none;
+  box-shadow: $primary-shadow;
+  color: $font-color-light;
+}
+
+%hover {
+  margin-bottom: 0.3rem;
+}
+%active {
+  margin-top: 0.3rem;
+  border-bottom: 0rem;
+}
+
+.btn-show {
+  @extend %btn;
+  background-color: $button-color-ok;
+  &:hover {
+    @extend %hover;
+    background-color: lighten($button-color-ok, 5%);
+    border-bottom: 0.2rem solid darken($button-color-ok, 15%);
+  }
+  &:active {
+    @extend %active;
+  }
+}
+
+.btn-comment-submit {
+  @extend %btn;
+
+  width: 100%;
+  background-color: $button-color-ok;
+  margin: 0.5rem 0;
+  &:hover {
+    @extend %hover;
+    background-color: lighten($button-color-ok, 5%);
+    border-bottom: 0.2rem solid darken($button-color-ok, 15%);
+  }
+  &:active {
+    @extend %active;
+  }
+}
+
+.btn-new-comment,
+.btn-show-comments,
+.btn-hide-comments {
+  @extend %btn;
+  font-size: 0.8rem;
+  background-color: $button-color-ok;
+  &:hover {
+    @extend %hover;
+    background-color: lighten($button-color-ok, 5%);
+    border-bottom: 0.2rem solid darken($button-color-ok, 15%);
+  }
+  &:active {
+    @extend %active;
+  }
+}
+
+.btn-comment-disabled {
+  @extend %btn;
+  font-size: 0.8rem;
+  text-decoration: line-through;
+}
+
+.btn-disabled {
+  @extend %btn;
+  text-decoration: line-through;
+}

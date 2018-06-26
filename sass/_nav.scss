@@ -1,0 +1,21 @@
+header {
+  height: 8rem;
+  background-color: $secondary-color;
+  border-bottom: 0.3rem solid $border-color;
+}
+
+nav {
+  @include flex(row);
+  color: $font-color-light;
+  width: 80%;
+  padding: 0.3rem;
+  margin: 2.5rem auto;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+
+#forum-name {
+  text-transform: uppercase;
+  font-size: 1.3rem;
+}

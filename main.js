@@ -175,9 +175,11 @@ const pushComment = (commentTitle, commentAuthor, commentText, postId) => {
   commentArr.push(commentObj);
 };
 
+// Generate comments from posts[].comments
 const populateComments = (postId, placeToPopulate) => {
   let comments = getPost(postId).comments;
 
+  // Generate comment element structure
   for (comment of comments) {
     let commentTemplate = `<li>
       <div class="comment-body">
@@ -186,7 +188,7 @@ const populateComments = (postId, placeToPopulate) => {
         <div class="comment-body-author"> - ${comment.author}</div>
       </div>
     </li>`;
-
+    // insert comment to DOM
     placeToPopulate.insertAdjacentHTML('beforeend', commentTemplate);
   }
 };
@@ -272,10 +274,25 @@ form.addEventListener('submit', e => {
 // delegated listener on posts.
 
 deckOfPosts.addEventListener('click', e => {
+  // selects the write comment form
+  let commentForm = document.querySelector('#commentForm');
+
+  // Postelement
   let post;
+
+  // Postobject from array
   let fetchedPost;
+
+  // Selects ul for show hide butttons
+  let commentUl;
+
+  // Selects section for display & hide
+  let commentsSection;
+
+  // Switch statement to catch diffrent click scenarios
+
   switch (e.target.className) {
-    // update post choice
+    // update post button
     case 'update fas fa-edit':
       // disable new post button and change it's style to class disabled
       showInputSection.disabled = true;
@@ -294,7 +311,7 @@ deckOfPosts.addEventListener('click', e => {
 
       break;
 
-    // remove post choice
+    // remove post button
     case 'delete far fa-trash-alt':
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
 
@@ -306,18 +323,19 @@ deckOfPosts.addEventListener('click', e => {
 
       break;
 
-    // create new comment to clicked post
+    // create new comment on post
     case 'btn-new-comment':
+      createPostButton = e.target;
       // disable new comment button during wrinting session
-      e.target.disabled = true;
-      e.target.classList.remove('btn-new-comment');
-      e.target.classList.add('btn-comment-disabled');
+      createPostButton.disabled = true;
+      createPostButton.classList.remove('btn-new-comment');
+      createPostButton.classList.add('btn-comment-disabled');
 
       // clicked post top element
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
 
       // selects commentsSection to show new comment form
-      let commentsSection = post.childNodes[1].childNodes[7];
+      commentsSection = post.childNodes[1].childNodes[7];
 
       // selects form div to poulate with form
       let createCommentForm = post.childNodes[1].childNodes[7].childNodes[5];
@@ -335,8 +353,6 @@ deckOfPosts.addEventListener('click', e => {
       // show whole section
       commentsSection.style.display = 'block';
 
-      // selects the write commente form
-      let commentForm = document.querySelector('#commentForm');
       console.log(commentForm);
       // when new comment is submited it is pushed to posts[].comments array and lastly removes the form
       commentForm.addEventListener('submit', e => {
@@ -353,23 +369,64 @@ deckOfPosts.addEventListener('click', e => {
 
         let ul = post.childNodes[1].childNodes[7].childNodes[3];
         ul.style.display = 'block';
+        ul.innerHTML = '';
         populateComments(post.id, ul);
+
+        showCommentButton =
+          post.childNodes[1].childNodes[5].childNodes[1].childNodes[3]
+            .childNodes[0];
+
+        // change button text and class to hide
+        showCommentButton.classList.remove('btn-show-comments');
+        showCommentButton.classList.add('btn-hide-comments');
+        showCommentButton.innerText = 'Hide comments';
+
+        // re-enable create post button
+        createPostButton.disabled = false;
+        createPostButton.classList.remove('btn-comment-disabled');
+        createPostButton.classList.add('btn-new-comment');
       });
 
       break;
 
-    // show comments belonging to clicked post
+    // show comments belonging to post
     case 'btn-show-comments':
+      showCommentButton = e.target;
+      // empty form before populating
+      commentForm.innerHTML = '';
+
       // clicked post top element
       post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
-      let ul = post.childNodes[1].childNodes[7].childNodes[3];
-      ul.style.display = 'block';
 
-      populateComments(post.id, ul);
+      // selects ul for populate direction
+      commentUl = post.childNodes[1].childNodes[7].childNodes[3];
+
+      // selects and shows comments section
+      commentsSection = post.childNodes[1].childNodes[7];
+      commentsSection.style.display = 'block';
+
+      populateComments(post.id, commentUl);
       // get post object from array
       fetchedPost = getPost(post.id);
 
+      // change button text and class to hide
+      showCommentButton.classList.remove('btn-show-comments');
+      showCommentButton.classList.add('btn-hide-comments');
+      showCommentButton.innerText = 'Hide comments';
+
       break;
+
+    case 'btn-hide-comments':
+      // Selects post top element and assign value to commentUl. Then change button back to show
+      post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+      // selects commentsSection to show new comment form
+      commentsSection = post.childNodes[1].childNodes[7];
+      commentsSection.style.display = 'none';
+
+      // change button text and class to show
+      showCommentButton.classList.remove('btn-hide-comments');
+      showCommentButton.classList.add('btn-show-comments');
+      showCommentButton.innerText = 'Show comments';
   }
 });
 

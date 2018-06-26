@@ -1,0 +1,19 @@
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 0px; /* remove scrollbar space */
+  background: transparent; /* optional: just make scrollbar invisible */
+}
+
+body {
+  @include flex;
+  height: 100vh;
+  font-family: $font-stack;
+  background-color: $primary-color;
+}
+
+main {
+  flex: 1;
+}
