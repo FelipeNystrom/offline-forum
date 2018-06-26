@@ -5,7 +5,13 @@ const deckOfPosts = document.querySelector('#deckOfPosts');
 
 // Data variables
 let posts = [
-  { title: 'hej hej', text: 'jalhfs↵', author: '', comments: Array(0), id: 0 }
+  {
+    title: 'hej hej',
+    text: 'Det här är en post',
+    author: '',
+    comments: Array(0),
+    id: 0
+  }
 ];
 
 let _postId = 0;
