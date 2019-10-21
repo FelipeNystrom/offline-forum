@@ -9,7 +9,35 @@ const deckOfPosts = document.querySelector('#deckOfPosts');
 let posts = [
   {
     title: 'hej hej',
-    text: 'Det här är en post',
+    text: 'Det här är första posten',
+    author: '',
+    comments: [],
+    id: generateRandomId()
+  },
+  {
+    title: 'hej hej',
+    text: 'Det här är andra posten',
+    author: '',
+    comments: [],
+    id: generateRandomId()
+  },
+  {
+    title: 'hej hej',
+    text: 'Det här är tredje posten',
+    author: '',
+    comments: [],
+    id: generateRandomId()
+  },
+  {
+    title: 'hej hej',
+    text: 'Det här är fjärde posten',
+    author: '',
+    comments: [],
+    id: generateRandomId()
+  },
+  {
+    title: 'hej hej',
+    text: 'Det här är femte posten',
     author: '',
     comments: [],
     id: generateRandomId()
@@ -19,33 +47,35 @@ let posts = [
 // FUNCTIONS
 
 function generatePostBody(post) {
-  return `<div id="${post.id}" class="post">
-  <div class="post-body">
-      <div class="post-title"><h3>${post.title}</h3></div>
-      <div class="post-text"><p>${post.text}</p> 
-      <em><p> - ${post.author}</p></em>
-      </div>
-      <div class="post-footer">
-        <div class="comments-control">
-        <div ><button id="${post.id}" class="btn-new-comment">New comment</button></div>
-          <div id="comments-${post.id}"><button id="${post.id}" class="btn-show-comments">Show comment</button></div>
+  return `
+    <div id="${post.id}" class="post">
+    <div class="post-body">
+        <div class="post-title"><h3>${post.title}</h3></div>
+        <div class="post-text"><p>${post.text}</p> 
+        <em><p> - ${post.author}</p></em>
         </div>
-        <div class="post-admin">
-          <p>
-            <a href="#inputSection"><i id="${post.id}" class="update fas fa-edit"></i></a>
-          </p>
-          <p>
-            <i id="${post.id}" class="delete far fa-trash-alt"></i>
-          </p>
+        <div class="post-footer">
+          <div class="comments-control">
+          <div ><button id="${post.id}" class="btn-new-comment">New comment</button></div>
+            <div id="comments-${post.id}"><button id="${post.id}" class="btn-show-comments">Show comment</button></div>
+          </div>
+          <div class="post-admin">
+            <p>
+              <a href="#inputSection"><i id="${post.id}" class="update fas fa-edit"></i></a>
+            </p>
+            <p>
+              <i id="${post.id}" class="delete far fa-trash-alt"></i>
+            </p>
+          </div>
         </div>
-      </div>
-      <div id="commentSection-${post.id}" class="commentsSection">
-      <h3 id="commentSectionTitle-${post.id}">Comments</h3>
-      <ul class="comments-list" id="commentsOnPost-${post.id}"></ul>
-      <form id="commentForm-${post.id}" class="comment-input"></form>
+        <div id="commentSection-${post.id}" class="commentsSection">
+        <h3 id="commentSectionTitle-${post.id}">Comments</h3>
+        <ul class="comments-list" id="commentsOnPost-${post.id}"></ul>
+        <form id="commentForm-${post.id}" class="comment-input"></form>
+        </div>
       </div>
     </div>
-  </div>`;
+  `;
 }
 
 function generateRandomId() {
