@@ -3,105 +3,94 @@ const inputSection = document.querySelector('#inputSection');
 const form = document.querySelector('#form');
 const deckOfPosts = document.querySelector('#deckOfPosts');
 
+// INITIAL DATA
+
 // Data variables
 let posts = [
   {
     title: 'hej hej',
     text: 'Det här är en post',
     author: '',
-    comments: Array(0),
-    id: 0
+    comments: [],
+    id: generateRandomId()
   }
 ];
 
-let _postId = 0;
-
 // FUNCTIONS
+
+function generatePostBody(post) {
+  return `<div id="${post.id}" class="post">
+  <div class="post-body">
+      <div class="post-title"><h3>${post.title}</h3></div>
+      <div class="post-text"><p>${post.text}</p> 
+      <em><p> - ${post.author}</p></em>
+      </div>
+      <div class="post-footer">
+        <div class="comments-control">
+        <div ><button id="${post.id}" class="btn-new-comment">New comment</button></div>
+          <div id="comments-${post.id}"><button id="${post.id}" class="btn-show-comments">Show comment</button></div>
+        </div>
+        <div class="post-admin">
+          <p>
+            <a href="#inputSection"><i id="${post.id}" class="update fas fa-edit"></i></a>
+          </p>
+          <p>
+            <i id="${post.id}" class="delete far fa-trash-alt"></i>
+          </p>
+        </div>
+      </div>
+      <div id="commentSection-${post.id}" class="commentsSection">
+      <h3 id="commentSectionTitle-${post.id}">Comments</h3>
+      <ul class="comments-list" id="commentsOnPost-${post.id}"></ul>
+      <form id="commentForm-${post.id}" class="comment-input"></form>
+      </div>
+    </div>
+  </div>`;
+}
+
+function generateRandomId() {
+  return (
+    '_' +
+    Math.random()
+      .toString(36)
+      .substr(2, 9)
+  );
+}
 
 // ======== CREATE POST FUNCTIONS ========
 
 // makes a object from new post input form and pushes that object to array posts
-const pushPost = (titleInput, textInput, authorInput, arr) => {
+
+function createNewPost(titleInput, textInput, authorInput, arr) {
   let post = {
+    id: generateRandomId(),
     title: titleInput,
     text: textInput,
     author: authorInput,
     comments: []
   };
 
-  // generate post id
+  posts = [...posts, post];
 
-  post.id = arr.length;
+  generatePosts();
+}
 
-  posts.push(post);
-  generatePost(post);
-};
-
-// generate post
-
-const generatePost = (post = null) => {
+function generatePosts(post = null) {
+  deckOfPosts.innerHTML = null;
   // html structure for new post
   for (post of posts) {
-    let newPost = `<div id="${post.id}" class="post">
-                    <div class="post-body">
-                        <div class="post-title"><h3>${post.title}</h3></div>
-                        <div class="post-text"><p>${post.text}</p> 
-                        <em><p> - ${post.author}</p></em>
-                        </div>
-                        <div class="post-footer">
-                          <div class="comments-control">
-                          <div><button class="btn-new-comment">New comment</button></div>
-                            <div><button class="btn-show-comments">Show comment</button></div>
-                          </div>
-                          <div class="post-admin">
-                            <p>
-                              <a href="#inputSection"><i class="update fas fa-edit"></i></a>
-                            </p>
-                            <p>
-                              <i class="delete far fa-trash-alt"></i>
-                            </p>
-                          </div>
-                        </div>
-                        <div class="commentsSection">
-                        <h3 id="commentSectionTitle"></h3>
-                        <ul class="comments-list" id="commentsOnPost-${
-                          post.id
-                        }"></ul>
-                        <form id="commentForm" class="comment-input"></form>
-                        </div>
-                      </div>
-                    </div>`;
+    let POST = generatePostBody(post);
 
-    // prevent loop to inject same post more than once
-    if (post.id === _postId) {
-      deckOfPosts.insertAdjacentHTML('beforeend', newPost);
-      _postId++;
-    } else if (_postId === post.id) {
-      deckOfPosts.insertAdjacentHTML('beforeend', newPost);
-      _postId++;
-    }
+    deckOfPosts.insertAdjacentHTML('beforeend', POST);
   }
-};
+}
+
+function getPost(postId) {
+  return posts.filter(post => post.id === postId)[0];
+}
 
 // ======== UPDATE POST FUNCTIONS ========
-
-// fetch post object with id
-
-const getPost = postId => {
-  // convert post id to number
-  let idNumber = parseInt(postId);
-  for (post of posts) {
-    // find post in posts array
-    if (post.id === idNumber) {
-      // returns post object
-      return post;
-    }
-  }
-};
-
-// Show form with value from fetched object
-
-const updatePost = postObj => {
+function updatePost(postObj) {
   // form html + post value
   const updatePostForm = `
   <input type="hidden" id="postId" value="${postObj.id}">
@@ -118,61 +107,63 @@ const updatePost = postObj => {
 
   // show section
   inputSection.style.display = 'block';
-};
+}
 
 // ======== REMOVE POST FUNCTION ========
 
 // delete post through id
 
-const removePost = postToRemove => {
-  let removePostId = parseInt(postToRemove.id);
-  deckOfPosts.removeChild(postToRemove);
-  posts = posts.filter(postID => postID === removePostId);
-};
+function removePost(postId) {
+  posts = posts.filter(post => post.id !== postId);
+
+  generatePosts();
+}
 
 // ======== COMMENTS ========
 
-const generateCommentForm = (whereToAttachForm, postId) => {
+function generateCommentForm(whereToAttachForm, postId) {
   // html form to be inserted when new post is clicked
   const newCommentForm = `
+  <div id="commentbody-${postId}">
     <input type="hidden" id="postId" value="${postId}">
     <div class="comment-form-input-row">
-        <input type="text" class="comment-title" id="commentTitle" placeholder="comment title">
-        <input class="comment-author" type="text" id="commentAuthor" placeholder="author name">
+        <input type="text" class="comment-title" id="commentTitle-${postId}" placeholder="comment title">
+        <input class="comment-author" type="text" id="commentAuthor-${postId}" placeholder="author name">
     </div>
-    <textarea class="comment-text" id="commentText" cols="2" rows="10" placeholder="write your comment"></textarea>
-    <input class="btn-comment-submit" type="submit" value="Leave comment">`;
+    <textarea class="comment-text" id="commentText-${postId}" cols="2" rows="10" placeholder="write your comment"></textarea>
+    <input id="leaveComment-${postId}" class="btn-comment-submit" type="submit" value="Leave comment">
+  </div>`;
 
   // form insertion
   whereToAttachForm.insertAdjacentHTML('afterbegin', newCommentForm);
-};
+}
 
 // push comment to posts[].comments
-const pushComment = (commentTitle, commentAuthor, commentText, postId) => {
+function pushComment(commentTitle, commentAuthor, commentText, postId) {
   // gets post with id
   let post = getPost(postId);
 
-  let id = post.comments.length;
   // create comment object
-  const commentObj = {
-    id: id,
+  const newComment = {
+    id: generateRandomId(),
     title: commentTitle,
     text: commentText,
     author: commentAuthor
   };
 
   // pushes comment object to comments array
-  let commentArr = post.comments;
-  commentArr.push(commentObj);
-};
+  post.comments = [...post.comments, newComment];
+}
 
 // Generate comments from posts[].comments
-const populateComments = (postId, placeToPopulate) => {
+function populateComments(postId, placeToPopulate) {
   let comments = getPost(postId).comments;
+  placeToPopulate.innerHTML = null;
 
   // Generate comment element structure
   for (comment of comments) {
-    let commentTemplate = `<li>
+    let COMMENT = `
+    <li>
       <div class="comment-body">
         <div class="comment-body-title"><h4>${comment.title}</h4></div>
         <div class="comment-body-text">${comment.text}</div>
@@ -180,9 +171,9 @@ const populateComments = (postId, placeToPopulate) => {
       </div>
     </li>`;
     // insert comment to DOM
-    placeToPopulate.insertAdjacentHTML('beforeend', commentTemplate);
+    placeToPopulate.insertAdjacentHTML('beforeend', COMMENT);
   }
-};
+}
 
 // ======== EVENT LISTENERS ========
 
@@ -223,7 +214,7 @@ form.addEventListener('submit', e => {
   // check which form is presented
   if (e.target[4].className === 'btn-submit new-post') {
     // create object to push to arrary
-    pushPost(formTitle, formText, formAuthor, posts);
+    createNewPost(formTitle, formText, formAuthor);
   } else if (e.target[5].className === 'btn-submit update-post') {
     // take post id and fetch object from array
     let postId = document.querySelector('#postId').value;
@@ -235,14 +226,11 @@ form.addEventListener('submit', e => {
     oldPost.author = formAuthor;
     oldPost.img = formAuthorImg;
 
-    // reset post counter
-    _postId = 0;
-
     // remove posts from DOM
     deckOfPosts.innerHTML = '';
 
     // re-generate posts in array to DOM
-    generatePost();
+    generatePosts();
 
     // enable create post button
     showInputSection.disabled = false;
@@ -265,8 +253,11 @@ form.addEventListener('submit', e => {
 // delegated listener on posts.
 
 deckOfPosts.addEventListener('click', e => {
+  const {
+    target: { id }
+  } = e;
   // selects the write comment form
-  let commentForm = document.querySelector('#commentForm');
+  let commentForm = document.querySelector(`#commentForm-${id}`);
 
   // Postelement
   let post;
@@ -280,6 +271,8 @@ deckOfPosts.addEventListener('click', e => {
   // Selects section for display & hide
   let commentsSection;
 
+  let commentButton;
+
   // Switch statement to catch diffrent click scenarios
 
   switch (e.target.className) {
@@ -291,12 +284,11 @@ deckOfPosts.addEventListener('click', e => {
       showInputSection.classList.add('btn-disabled');
 
       // selects whole post element
-      post =
-        e.target.parentNode.parentNode.parentNode.parentNode.parentNode
-          .parentNode.id;
+      postid = e.target.id;
 
       // get post object from array
-      fetchedPost = getPost(post);
+      fetchedPost = getPost(id);
+
       // generate update form and populate with post values from array
       updatePost(fetchedPost);
 
@@ -304,13 +296,9 @@ deckOfPosts.addEventListener('click', e => {
 
     // remove post button
     case 'delete far fa-trash-alt':
-      post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+      post = e.target.id;
 
-      removePost(post);
-
-      if (posts.length === 0) {
-        _postId = 0;
-      }
+      removePost(id);
 
       break;
 
@@ -323,54 +311,55 @@ deckOfPosts.addEventListener('click', e => {
       createPostButton.classList.add('btn-comment-disabled');
 
       // clicked post top element
-      post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+      post = e.target.id;
 
       // selects commentsSection to show new comment form
-      commentsSection = post.childNodes[1].childNodes[7];
-
-      // selects form div to poulate with form
-      let createCommentForm = post.childNodes[1].childNodes[7].childNodes[5];
+      commentsSection = document.querySelector(`#commentSection-${id}`);
 
       // get post object from posts array
-      fetchedPost = getPost(post.id);
+      fetchedPost = getPost(id);
 
       // generate and shows new post form
-      generateCommentForm(createCommentForm, post.id);
+      generateCommentForm(commentForm, id);
 
       // Choose and set comment section title dynamically
-      let commentSectionTitle = commentsSection.childNodes[1];
+      let commentSectionTitle = document.querySelector(
+        `#commentSectionTitle-${id}`
+      );
       commentSectionTitle.innerHTML = 'Comments';
 
       // show whole section
       commentsSection.style.display = 'block';
 
-      console.log(commentForm);
+      commentButton = document.querySelector(`#comments-${id}`).firstChild;
+      commentButton.classList.remove('btn-show-comments');
+      commentButton.classList.add('btn-hide-comments');
+      commentButton.innerText = 'Hide comments';
+
       // when new comment is submited it is pushed to posts[].comments array and lastly removes the form
       commentForm.addEventListener('submit', e => {
         e.preventDefault();
 
-        let postId = document.querySelector('#postId').value;
-        let commentTitle = document.querySelector('#commentTitle').value;
-        let commentAuthor = document.querySelector('#commentAuthor').value;
-        let commentText = document.querySelector('#commentText').value;
-
-        pushComment(commentTitle, commentAuthor, commentText, postId);
+        let commentTitle = document.querySelector(`#commentTitle-${id}`).value;
+        let commentAuthor = document.querySelector(`#commentAuthor-${id}`)
+          .value;
+        let commentText = document.querySelector(`#commentText-${id}`).value;
 
         commentForm.innerHTML = '';
+        pushComment(commentTitle, commentAuthor, commentText, id);
 
-        let ul = post.childNodes[1].childNodes[7].childNodes[3];
+        let ul = document.querySelector(`#commentsOnPost-${id}`);
+
         ul.style.display = 'block';
         ul.innerHTML = '';
-        populateComments(post.id, ul);
+        populateComments(id, ul);
 
-        showCommentButton =
-          post.childNodes[1].childNodes[5].childNodes[1].childNodes[3]
-            .childNodes[0];
+        commentButton = document.querySelector(`#comments-${id}`).firstChild;
 
         // change button text and class to hide
-        showCommentButton.classList.remove('btn-show-comments');
-        showCommentButton.classList.add('btn-hide-comments');
-        showCommentButton.innerText = 'Hide comments';
+        commentButton.classList.remove('btn-show-comments');
+        commentButton.classList.add('btn-hide-comments');
+        commentButton.innerText = 'Hide comments';
 
         // re-enable create post button
         createPostButton.disabled = false;
@@ -382,43 +371,39 @@ deckOfPosts.addEventListener('click', e => {
 
     // show comments belonging to post
     case 'btn-show-comments':
-      showCommentButton = e.target;
-      // empty form before populating
-      commentForm.innerHTML = '';
-
-      // clicked post top element
-      post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
-
+      commentButton = document.querySelector(`#comments-${id}`).firstChild;
       // selects ul for populate direction
-      commentUl = post.childNodes[1].childNodes[7].childNodes[3];
+      commentsUl = document.querySelector(`#commentsOnPost-${id}`);
 
       // selects and shows comments section
-      commentsSection = post.childNodes[1].childNodes[7];
+      commentsSection = document.querySelector(`#commentSection-${id}`);
+
       commentsSection.style.display = 'block';
 
-      populateComments(post.id, commentUl);
+      populateComments(id, commentsUl);
       // get post object from array
-      fetchedPost = getPost(post.id);
+      fetchedPost = getPost(id);
 
       // change button text and class to hide
-      showCommentButton.classList.remove('btn-show-comments');
-      showCommentButton.classList.add('btn-hide-comments');
-      showCommentButton.innerText = 'Hide comments';
+      commentButton.classList.remove('btn-show-comments');
+      commentButton.classList.add('btn-hide-comments');
+      commentButton.innerText = 'Hide comments';
 
       break;
 
     case 'btn-hide-comments':
-      // Selects post top element and assign value to commentUl. Then change button back to show
-      post = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+      commentButton = document.querySelector(`#comments-${id}`).firstChild;
+
       // selects commentsSection to show new comment form
-      commentsSection = post.childNodes[1].childNodes[7];
+      commentsSection = document.querySelector(`#commentSection-${id}`);
+
       commentsSection.style.display = 'none';
 
       // change button text and class to show
-      showCommentButton.classList.remove('btn-hide-comments');
-      showCommentButton.classList.add('btn-show-comments');
-      showCommentButton.innerText = 'Show comments';
+      commentButton.classList.remove('btn-hide-comments');
+      commentButton.classList.add('btn-show-comments');
+      commentButton.innerText = 'Show comments';
   }
 });
 
-generatePost();
+generatePosts();
