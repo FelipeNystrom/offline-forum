@@ -19,12 +19,13 @@
     border-bottom: 0.1rem solid hsla(0, 0%, 80%, 0.6);
   }
   .btn-submit {
+    // @extend %btn;
     background-color: $button-color-ok;
-    color: $font-color-light;
+
     &:hover {
       @extend %hover;
       background-color: lighten($button-color-ok, 5%);
-      border-bottom: 0.2rem solid darken($button-color-ok, 15%);
+      border-bottom: 0.3rem solid darken($button-color-ok, 15%);
     }
     &:active {
       @extend %active;

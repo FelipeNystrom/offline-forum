@@ -3,8 +3,7 @@
 .comments-control {
   @include flex(row);
   justify-content: space-between;
-  min-width: 15rem;
-  align-items: center;
+  min-width: 25rem;
 }
 
 .comment-input {
@@ -63,6 +62,7 @@
 
 .commentsSection {
   display: none;
+  height: 100vh;
   @extend %post-inner-body;
   h3 {
     text-align: center;

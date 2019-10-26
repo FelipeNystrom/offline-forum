@@ -56,8 +56,8 @@ function generatePostBody(post) {
         </div>
         <div class="post-footer">
           <div class="comments-control">
-          <div ><button id="${post.id}" class="btn-new-comment">New comment</button></div>
-            <div id="comments-${post.id}"><button id="${post.id}" class="btn-show-comments">Show comment</button></div>
+            <div class="btn-wrapper"><button id="${post.id}" class="btn-new-comment">New comment</button></div>
+            <div class="btn-wrapper" id="comments-${post.id}"><button id="${post.id}" class="btn-show-comments">Show comment</button></div>
           </div>
           <div class="post-admin">
             <p>
@@ -130,7 +130,9 @@ function updatePost(postObj) {
       <input type="text" id="formAuthor" value="${postObj.author}">
       <input type="text" id="formAuthorImg" value="${postObj.img}">
   </div>
-  <input class="btn-submit update-post" type="submit" value="update post">`;
+  <div class="btn-wrapper">
+    <input class="btn-submit update-post" type="submit" value="update post">
+  </div>`;
 
   // insert post value + update form
   form.insertAdjacentHTML('afterbegin', updatePostForm);
@@ -161,7 +163,9 @@ function generateCommentForm(whereToAttachForm, postId) {
         <input class="comment-author" type="text" id="commentAuthor-${postId}" placeholder="author name">
     </div>
     <textarea class="comment-text" id="commentText-${postId}" cols="2" rows="10" placeholder="write your comment"></textarea>
-    <input id="leaveComment-${postId}" class="btn-comment-submit" type="submit" value="Leave comment">
+    <div class="btn-wrapper">
+      <input id="leaveComment-${postId}" class="btn-comment-submit" type="submit" value="Leave comment">
+    </div>
   </div>`;
 
   // form insertion
@@ -212,13 +216,18 @@ function populateComments(postId, placeToPopulate) {
 showInputSection.addEventListener('click', e => {
   // html code to be injected on event
   const createPostForm = `
-  <input type="text" id="formTitle" placeholder="title">
-  <textarea id="formText" cols="30" rows="10" placeholder="post text"></textarea>
-  <div id="formAuthorInfo">
-      <input type="text" id="formAuthor" placeholder="name of author">
-      <input type="text" id="formAuthorImg" placeholder="author image">
+  <div>
+    <input type="text" id="formTitle" placeholder="title">
+    <textarea id="formText" cols="30" rows="10" placeholder="post text"></textarea>
+    <div id="formAuthorInfo">
+        <input type="text" id="formAuthor" placeholder="name of author">
+        <input type="text" id="formAuthorImg" placeholder="author image">
+    </div>
+    <div class="btn-wrapper">
+      <input class="btn-submit new-post" type="submit" value="make new post">
+    </div>
   </div>
-  <input class="btn-submit new-post" type="submit" value="make new post">`;
+  `;
 
   showInputSection.disabled = true;
   showInputSection.classList.remove('btn-show');
@@ -339,9 +348,6 @@ deckOfPosts.addEventListener('click', e => {
       createPostButton.disabled = true;
       createPostButton.classList.remove('btn-new-comment');
       createPostButton.classList.add('btn-comment-disabled');
-
-      // clicked post top element
-      post = e.target.id;
 
       // selects commentsSection to show new comment form
       commentsSection = document.querySelector(`#commentSection-${id}`);

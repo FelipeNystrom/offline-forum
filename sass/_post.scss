@@ -1,27 +1,23 @@
 /* posts */
 
-.post-wrapper {
-}
-
 .post {
   position: relative;
   min-height: 15rem;
-  max-height: 50rem;
   border-radius: 0.3rem;
   margin: 1rem 0;
+  overflow: overlay;
+  background-color: $tertiary-color;
+  border: 0.1rem solid $secondary-color-transparent;
 }
 
 .post-body {
   @extend %post-body-template;
+  @include flex;
   width: 100%;
   display: flex;
   position: absolute;
-  overflow: hidden;
   bottom: 0;
-  background-color: $tertiary-color;
   box-shadow: none;
-  border-radius: 8px;
-  border: 0.1rem solid $secondary-color-transparent;
   transition: bottom 100ms ease-in-out, box-shadow 100ms ease-in-out;
   &:hover {
     box-shadow: $primary-shadow;
